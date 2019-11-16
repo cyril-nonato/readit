@@ -1,12 +1,14 @@
 const white = '#fff';
 const grey = '#A5A3A4';
+const lightBlack = 'rgba(0,0,0,.1)';
+const black = '#000';
 
 const theme1 = {
   primary: '#0079d3',
   secondary: white,
   signInOut: white,
   input: {
-    border: 'rgba(0,0,0,.1)',
+    border: lightBlack,
     label: '#a5a4a4',
     after: '#24a0ed'
   },
@@ -23,7 +25,8 @@ const theme1 = {
   backgroundColor: '#DAE0E6',
   navigation: {
     background: '#f9f9f9',
-    borderBottom: grey,
+    backgroundLink: lightBlack,
+    iconsColor: black,
     userOptions: {
       buttonBackgroundColor: 'transparent',
       triangleBackgroundColor: grey,
@@ -37,6 +40,11 @@ const theme1 = {
       arrowHover: grey,
     },
   },
+  posts: {
+    subNav: {
+      border: lightBlack
+    }
+  }
 };
 
 export { theme1 }

@@ -1,27 +1,26 @@
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
+
+import { Link } from 'react-router-dom'
 
 const gridMain = css`
-  grid-template-columns: 1.15fr 6fr .25fr .25fr .25fr;
+  grid-template-columns: 1.15fr 6fr .25fr .25fr .25fr .25fr;
 `;
 
 const checkSelectAuthUserCreds = props => {
-  if(props.selectAuthUserCreds) {
+  if (props.selectAuthUserCreds) {
     return gridMain;
   }
   return null;
 }
 
-
-export const Navigation = styled.nav`
-  background-color: ${props => props.theme.navigation.background};
-`;
-
-export const Main = styled.div`
+export const Navigation = styled.div`
   display: grid;
-  grid-template-columns: 1.15fr 2fr .5fr .5fr 1fr;
+  grid-template-columns: 1.15fr 2fr .5fr .5fr .5fr 1fr;
   grid-template-rows: 50px;
   grid-gap: 1rem;
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   background-color: ${props => props.theme.navigation.background};
 
@@ -62,7 +61,7 @@ export const SignUpContainer = styled.div`
   display: none;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
-    display :block;
+    display: block;
 
     ${SignUpAndLoginStyles};
   }
@@ -70,11 +69,17 @@ export const SignUpContainer = styled.div`
 
 export const BrandLogo = styled.img`
   height: 30px;
+
 `;
 
 export const BrandText = styled.h2`
   font-size: 1.6rem;
   letter-spacing: 1px;
+  display: none;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    display: block;
+  }
 `
 
 export const BrandContainer = styled.div`
@@ -82,8 +87,12 @@ export const BrandContainer = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
-`
+  justify-content: center;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    justify-content: space-between;
+  }
+`;
 
 export const UserOptions = styled.div`
 
@@ -93,7 +102,7 @@ export const UserOptions = styled.div`
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
 
   }
-`; 
+`;
 
 export const Button = styled.button`
   border: none;
@@ -120,7 +129,7 @@ export const Text = styled.span`
   padding: .5rem 1rem;
   font-size: 1.2rem;
   display: none;
-  background-color: ${props => props.theme.primary};
+  background-color: ${props => props.theme.navigation.iconsColor};
   color: ${props => props.theme.secondary};
   position: absolute;
   bottom: -4rem;
@@ -133,61 +142,68 @@ export const PopularIcon = styled.div`
   height: 18px;
   width: 15px;
   clip-path: polygon(2% 57%, 50% 0, 100% 55%, 67% 56%, 68% 100%, 35% 100%, 35% 58%);
-  background-color: ${props => props.theme.primary};
+  background-color: ${props => props.theme.navigation.iconsColor};
 `;
 
-
-export const PopularContainer = styled.div`
-
+const IconsContainerStyles = css`
+  padding: .5rem 1rem;
   align-self: center;
   justify-self: center;
   position: relative;
 
   &:hover {
     cursor: pointer;
+    background-color: ${props => props.theme.navigation.backgroundLink};
   }
 
   &:hover ${Text} {
     display: block;
   }
+`
+
+
+export const PopularContainer = styled(Link)`
+  ${IconsContainerStyles};
+
 `;
 
 
 export const AllBoxIconSmaller = styled.div`
-  height: 15px;
+  height: 20px;
   width: 8px;
   clip-path: polygon(0 76%, 100% 75%, 100% 100%, 0 100%);
-  background-color: ${props => props.theme.primary};
+  background-color: ${props => props.theme.navigation.iconsColor};
 `;
 
 export const AllBoxIconBigger = styled.div`
-  height: 15px;
+  height: 20px;
   width: 8px;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  background-color: ${props => props.theme.primary};
+  background-color: ${props => props.theme.navigation.iconsColor};
 `;
 
 export const AllArrowIcon = styled.div`
-  height: 15px;
+  height: 20px;
   width: 10px;
   clip-path: polygon(0 50%, 48% 9%, 100% 49%, 79% 50%, 80% 100%, 25% 100%, 25% 51%);
-  background-color: ${props => props.theme.primary};
+  background-color: ${props => props.theme.navigation.iconsColor};
 `;
 
-export const AllContainer = styled.div`
-  justify-self: center;
-  align-self: center;
+export const AllContainer = styled(Link)`
+  ${IconsContainerStyles};
   display: flex;
-  position: relative;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:hover ${Text} {
-    display: block;
-  }
 `;
+
+export const CreatePostIcon = styled.div`
+background-color: ${props => props.theme.navigation.iconsColor};
+  clip-path: polygon(73% 0, 100% 24%, 25% 100%, 0 100%, 0 73%);
+  height: 20px;
+  width: 20px;
+`
+
+export const CreatePostContainer = styled(Link)`
+  ${IconsContainerStyles};
+`
 
 
 

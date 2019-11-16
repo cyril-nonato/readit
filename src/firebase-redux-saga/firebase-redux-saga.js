@@ -14,8 +14,10 @@ const myFirebaseApp = firebase.initializeApp({
   measurementId: "G-G7T4CVGJVJ"
 });
 
+const firestore = firebase.firestore();
+
 const reduxSagaFirebase = new ReduxSagaFirebase(myFirebaseApp);
 
 export default reduxSagaFirebase;
 
-export { firebase }
+export { firebase, firestore }
