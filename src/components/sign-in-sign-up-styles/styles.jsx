@@ -7,6 +7,11 @@ export const Container = styled.section`
   width: 100vw;
   grid-template-columns: 100%;
   grid-auto-rows: 100vh;
+  background: ${props => props.theme.signInOut};
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
     grid-template-columns: 1.25fr 8fr;

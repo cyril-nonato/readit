@@ -1,5 +1,10 @@
+const white = '#fff';
+const grey = '#A5A3A4';
+
 const theme1 = {
   primary: '#0079d3',
+  secondary: white,
+  signInOut: white,
   input: {
     border: 'rgba(0,0,0,.1)',
     label: '#a5a4a4',
@@ -12,9 +17,26 @@ const theme1 = {
   button: {
     background: 'rgba(0, 121, 211)',
     backgroundHover: 'rgba(0, 121, 211, .8)',
-    text: '#fff'
+    text: white,
+    customStyleBackground: white
   },
   backgroundColor: '#DAE0E6',
+  navigation: {
+    background: '#f9f9f9',
+    borderBottom: grey,
+    userOptions: {
+      buttonBackgroundColor: 'transparent',
+      triangleBackgroundColor: grey,
+    },
+    dropdown: {
+      icon: grey,
+      text: 'black',
+      textHover: white,
+      iconHover: white,
+      arrow: white,
+      arrowHover: grey,
+    },
+  },
 };
 
 export { theme1 }

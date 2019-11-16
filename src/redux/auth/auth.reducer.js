@@ -32,6 +32,28 @@ const authReducer = (state = INITIAL_STATE, action) => {
         failure: action.payload.message,
         popUp: true
       }
+    case actionTypes.SIGN_IN_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case actionTypes.SIGN_IN_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.message,
+        failure: null,
+        userCreds: action.payload.userCreds,
+        popUp: true
+      }
+    case actionTypes.SIGN_IN_REQUEST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: null,
+        failure: action.payload.message,
+        popUp: true
+      }
     case actionTypes.AUTH_POP_UP:
       return {
         ...state,

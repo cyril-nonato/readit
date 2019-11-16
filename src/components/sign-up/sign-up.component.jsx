@@ -43,9 +43,9 @@ const SignUp = ({onSignUpRequest, selectAuthUserCreds}) => {
         <FormInput value={userCreds.password} onChange={handleChange} name='password' label='password' type='password' />
         <FormInput value={userCreds.confirm_password} onChange={handleChange} name='confirm_password' label='confirm password' type='password' />
         <CustomButton type='submit'>Sign up</CustomButton>
-        <S.Span>Have an account? <S.Anchor to='login'>Sign in</S.Anchor></S.Span>
+        <S.Span>Have an account? <S.Anchor to='/login'>Sign in</S.Anchor></S.Span>
+        <S.Span>Go to Homepage? <S.Anchor to='/'>Home</S.Anchor></S.Span>
       </S.Form>
-     
     </S.Container>
    );
 }

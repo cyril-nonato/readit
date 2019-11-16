@@ -38,7 +38,8 @@ const SignIn = ({ onSignInRequest, selectAuthUserCreds }) => {
         <FormInput value={userCreds.email} onChange={handleChange} name='email' label='email' type='email' />
         <FormInput value={userCreds.password} onChange={handleChange} name='password' label='password' type='password' />
         <CustomButton type='submit'>Sign in</CustomButton>
-        <S.Span>New to RedditZilla? <S.Anchor to='register'>Sign up</S.Anchor></S.Span>
+        <S.Span>New to RedditZilla? <S.Anchor to='/register'>Sign up</S.Anchor></S.Span>
+        <S.Span>Go to Homepage? <S.Anchor to='/'>Home</S.Anchor></S.Span>
       </S.Form>
 
     </S.Container>

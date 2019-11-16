@@ -1,7 +1,7 @@
-import { call, all, put, takeLeading } from 'redux-saga/effects'
+import { call, all, put, takeLeading, takeLatest } from 'redux-saga/effects'
 import rsf, { firebase } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './auth.types'
-import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure } from './auth.actions';
+import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure } from './auth.actions';
 
 // gets user creds from firebase
 function* getUserCreds(user) {
@@ -56,12 +56,26 @@ function* signInRequestSagaAsync({ payload: { userCreds: { email, password } } }
 }
 
 function* signInRequestSaga() {
-  yield takeLeading(actionTypes.SIGN_IN_REQUEST, signInRequestSagaAsync)
+  yield takeLeading(actionTypes.SIGN_IN_REQUEST, signInRequestSagaAsync);
+}
+
+function* signOutRequestSagaAsync() {
+  try {
+    yield call(rsf.auth.signOut);
+    yield put(signOutRequestSuccess('Logout out success'));
+  } catch (error) {
+    yield put(signOutRequestFailure(error.message));
+  }
+}
+
+function* signOutRequestSaga() {
+  yield takeLatest(actionTypes.SIGN_OUT_REQUEST, signOutRequestSagaAsync);
 }
 
 export function* authSaga() {
   yield all([
     call(signUpRequestSaga),
-    call(signInRequestSaga)
+    call(signInRequestSaga),
+    call(signOutRequestSaga)
   ])
 }

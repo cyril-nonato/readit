@@ -2,10 +2,10 @@ import React from 'react';
 
 import * as S from './custom-button.styles';
 
-const CustomButton = ({ onClick, type, children, isLink, to }) => {
+const CustomButton = ({ onClick, white, type, children, isLink, to }) => {
 
   if(isLink) {
-    return <S.LinkButton to={to}>
+    return <S.LinkButton white={white} to={to}>
       {children}
     </S.LinkButton>
   }

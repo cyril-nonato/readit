@@ -1,5 +1,200 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
+
+const gridMain = css`
+  grid-template-columns: 1.15fr 6fr .25fr .25fr .25fr;
+`;
+
+const checkSelectAuthUserCreds = props => {
+  if(props.selectAuthUserCreds) {
+    return gridMain;
+  }
+  return null;
+}
+
 
 export const Navigation = styled.nav`
-  
+  background-color: ${props => props.theme.navigation.background};
+`;
+
+export const Main = styled.div`
+  display: grid;
+  grid-template-columns: 1.15fr 2fr .5fr .5fr 1fr;
+  grid-template-rows: 50px;
+  grid-gap: 1rem;
+  position: fixed;
+  width: 100%;
+  background-color: ${props => props.theme.navigation.background};
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    padding: 0 5rem;
+    grid-template-columns: 1.15fr 5fr .25fr .25fr 1fr 1fr .5fr;
+
+    ${checkSelectAuthUserCreds};
+  }
+`;
+
+const SignUpAndLoginStyles = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    &:link,
+    &:visited {
+      padding: .75rem;
+      display: block;
+      width: 100%;
+    }
+  }
 `
+
+export const LoginContainer = styled.div`
+  display: none;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    display: block;
+
+    ${SignUpAndLoginStyles};
+  }
+`;
+
+export const SignUpContainer = styled.div`
+  display: none;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    display :block;
+
+    ${SignUpAndLoginStyles};
+  }
+`
+
+export const BrandLogo = styled.img`
+  height: 30px;
+`;
+
+export const BrandText = styled.h2`
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+`
+
+export const BrandContainer = styled.div`
+  padding-left: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+export const UserOptions = styled.div`
+
+  align-self: center;
+  justify-self: center;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+
+  }
+`; 
+
+export const Button = styled.button`
+  border: none;
+  width: 4.5rem;
+  background-color: ${props => props.theme.navigation.userOptions.buttonBackgroundColor};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  outline: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Triangle = styled.div`
+  height: .75rem;
+  width: 1.25rem;
+  background-color: ${props => props.theme.navigation.userOptions.triangleBackgroundColor};
+  clip-path: polygon(0 0, 52% 100%, 100% 0);
+`;
+
+export const Text = styled.span`
+  padding: .5rem 1rem;
+  font-size: 1.2rem;
+  display: none;
+  background-color: ${props => props.theme.primary};
+  color: ${props => props.theme.secondary};
+  position: absolute;
+  bottom: -4rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 5px;
+`;
+
+export const PopularIcon = styled.div`
+  height: 18px;
+  width: 15px;
+  clip-path: polygon(2% 57%, 50% 0, 100% 55%, 67% 56%, 68% 100%, 35% 100%, 35% 58%);
+  background-color: ${props => props.theme.primary};
+`;
+
+
+export const PopularContainer = styled.div`
+
+  align-self: center;
+  justify-self: center;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover ${Text} {
+    display: block;
+  }
+`;
+
+
+export const AllBoxIconSmaller = styled.div`
+  height: 15px;
+  width: 8px;
+  clip-path: polygon(0 76%, 100% 75%, 100% 100%, 0 100%);
+  background-color: ${props => props.theme.primary};
+`;
+
+export const AllBoxIconBigger = styled.div`
+  height: 15px;
+  width: 8px;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  background-color: ${props => props.theme.primary};
+`;
+
+export const AllArrowIcon = styled.div`
+  height: 15px;
+  width: 10px;
+  clip-path: polygon(0 50%, 48% 9%, 100% 49%, 79% 50%, 80% 100%, 25% 100%, 25% 51%);
+  background-color: ${props => props.theme.primary};
+`;
+
+export const AllContainer = styled.div`
+  justify-self: center;
+  align-self: center;
+  display: flex;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover ${Text} {
+    display: block;
+  }
+`;
+
+
+
+export const UserLogo = styled.img`
+  height: 20px;
+`;
+
+export const Sub = styled.div`
+
+`;
