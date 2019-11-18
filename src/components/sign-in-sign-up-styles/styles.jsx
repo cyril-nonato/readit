@@ -7,7 +7,7 @@ export const Container = styled.section`
   width: 100vw;
   grid-template-columns: 100%;
   grid-auto-rows: 100vh;
-  background: ${props => props.theme.signInOut};
+  background: ${props => props.theme.primary};
   z-index: 100;
   position: absolute;
   top: 0;
@@ -72,5 +72,5 @@ export const Anchor = styled(Link)`
   font-weight: bold;
   text-transform: uppercase;
   margin-left: .5rem;
-  color: ${props => props.theme.primary}
-`
+  color: ${props => props.theme.secondary};
+`;

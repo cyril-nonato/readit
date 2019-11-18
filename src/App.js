@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { GlobalStyles } from './App.styles'
 import { ThemeProvider } from 'styled-components'
 import { theme1 } from './theme/theme'
@@ -8,8 +9,21 @@ import SignInPage from './pages/sign-in-page/sign-in-page.component';
 import NavigationContainer from './components/navigation/navigation.container';
 import SignOutContainer from './components/sign-out/sign-out.container';
 import HomePageContainer from './pages/home-page/home-page.container';
+import { selectAuthUserCreds } from './redux/auth/auth.selector';
+import { votesCheckRequest } from './redux/votes/votes.actions';
+import CreatePostPageContainer from './pages/create-post-page/create-post-page.container';
 
 function App() {
+  const userCreds = useSelector(selectAuthUserCreds);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(userCreds) {
+      dispatch(votesCheckRequest())
+    }
+  
+  }, [userCreds, dispatch]);
+
   return (
 
     <div className="App">
@@ -23,6 +37,7 @@ function App() {
             <Route path='/logout' component={SignOutContainer} />
             <Route exact path='/' component={HomePageContainer} />
             <Route path='/r/popular' component={HomePageContainer} />
+            <Route path='/create-post' component={CreatePostPageContainer} />
           </Switch>
         </ThemeProvider>
       </Router>

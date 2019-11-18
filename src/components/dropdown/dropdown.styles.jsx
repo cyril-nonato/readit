@@ -7,13 +7,13 @@ export const Container = styled.div`
   display: block;
   height: auto;
   width: 200px;
-  background-color: ${props => props.theme.navigation.background};
+  background-color: ${props => props.theme.primary};
   top: 5rem;
   right: 0;
   border-radius: 5px;
   overflow: hidden;
   z-index: 10;
-  border: 1px solid ${props => props.theme.navigation.background};
+  border: 1px solid ${props => props.theme.primary};
 `;
 
 export const OptionText = styled.span`
@@ -22,7 +22,7 @@ export const OptionText = styled.span`
   font-weight: bold;
   padding-left: 5px;
   text-transform: uppercase;
-  color: ${props => props.theme.navigation.dropdown.icon};
+  color: ${props => props.theme.tertiary};
 `;
 
 export const List = styled.ul`
@@ -45,7 +45,7 @@ export const MoonLogo = styled.div`
   width: 12px;
   border-radius: 50%; 
   background-color: transparent;
-  box-shadow: -5px 0 0 4px ${props => props.theme.navigation.dropdown.icon};
+  box-shadow: -5px 0 0 4px ${props => props.theme.tertiary};
   align-self: center;
 `;
 
@@ -64,15 +64,15 @@ const buttonLinkStyle = css`
   padding: 0 10px 0 20px;
   background: transparent;
   border: none;
-  color: ${props => props.theme.navigation.dropdown.text};
+  color: ${props => props.theme.quinary};
 
   &:hover {
-    background-color: ${props => props.theme.primary};
+    background-color: ${props => props.theme.secondary};
     cursor: pointer;
   }
 
   &:hover ${Text} {
-    color: ${props => props.theme.navigation.dropdown.textHover};
+    color: ${props => props.theme.primary};
   }
 
 `;
@@ -88,7 +88,7 @@ export const SignInSignUpContainer = styled.div`
 export const Box = styled.div`
   height: 100%;
   width: 100%;
-  background-color: ${props => props.theme.navigation.dropdown.icon};
+  background-color: ${props => props.theme.tertiary};
 `;
 
 const arrowStyles = css`
@@ -98,7 +98,7 @@ const arrowStyles = css`
   height: 60%;
   width: 80%;
   translate: translateY(-50%, 0);
-  background-color: ${props => props.theme.navigation.dropdown.arrow};
+  background-color: ${props => props.theme.primary};
 `;
 
 export const ArrowIn = styled.div`
@@ -119,7 +119,7 @@ export const Button = styled.div`
   font-family: inherit;
 
   &:hover ${MoonLogo} {
-    box-shadow: -5px 0 0 4px ${props => props.theme.navigation.dropdown.iconHover};
+    box-shadow: -5px 0 0 4px ${props => props.theme.primary};
   }
 `;
 
@@ -128,16 +128,16 @@ export const Anchor = styled(Link)`
   font-weight: bold;
 
   &:hover ${MoonLogo} {
-    box-shadow: -5px 0 0 4px ${props => props.theme.navigation.dropdown.iconHover};
+    box-shadow: -5px 0 0 4px ${props => props.theme.tertiary};
   }
 
   &:hover ${ArrowIn},
   &:hover ${ArrowOut} {
-    background-color: ${props => props.theme.navigation.dropdown.arrowHover};
+    background-color: ${props => props.theme.tertiary};
   }
 
   &:hover ${Box} {
-    background-color: ${props => props.theme.navigation.dropdown.iconHover};
+    background-color: ${props => props.theme.primary};
   }
 `;
 

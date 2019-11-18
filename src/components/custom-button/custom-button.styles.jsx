@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const sharedStyle = css`
-  color: ${props => props.theme.button.text};
+  color: ${props => props.theme.primary};
   font-weight: bolder;
   background-color: ${props => props.theme.button.background};
   border: none;
@@ -15,26 +15,24 @@ const sharedStyle = css`
   text-transform: uppercase;
   transition: all .2s ease-in;
   
-
-`
+`;
 
 const customStyle = css`
   &:link,
   &:visited {
-    color: ${props => props.theme.primary};
-    background-color: ${props => props.theme.button.customStyleBackground} !important;
-    border: 1px solid ${props => props.theme.primary};
+    color: ${props => props.theme.secondary};
+    background-color: ${props => props.theme.primary};
+    border: 1px solid ${props => props.theme.secondary};
   }
 
   &:hover {
-    background-color: ${props => props.theme.button.customStyleBackground};
+    background-color: ${props => props.theme.primary};
   }
 
 `;
 
 const checkIsWhite = props => {
   if (props.white) {
-    console.log(props.theme);
     return customStyle;
   }
 

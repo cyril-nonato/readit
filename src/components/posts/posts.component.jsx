@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react'
 import Post from '../post/post.component';
 
+import * as S from './posts.styles'
+
 const Posts = ({ posts }) => {
 
-  console.log(posts);
   return (
-    posts.map(post => <Post key={post.id} post={post} />)
+    <S.List>
+      {
+        posts.map(post => <Post key={post.id} post={post} />)
+      }
+    </S.List>
   );
 }
 

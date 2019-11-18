@@ -10,7 +10,7 @@ const SignUp = ({onSignUpRequest, selectAuthUserCreds}) => {
 
   const [userCreds, setUserCreds] = useState({
     email: '',
-    full_name: '',
+    username: '',
     password: '',
     confirm_password: ''
   });
@@ -39,7 +39,7 @@ const SignUp = ({onSignUpRequest, selectAuthUserCreds}) => {
       <S.Form onSubmit={handleSubmit}>
         <S.H3>Sign up</S.H3>
         <FormInput value={userCreds.email} onChange={handleChange} name='email' label='email' type='email' />
-        <FormInput value={userCreds.full_name} onChange={handleChange} name='full_name' label='full name' type='text' />
+        <FormInput value={userCreds.username} onChange={handleChange} name='username' label='username' type='text' />
         <FormInput value={userCreds.password} onChange={handleChange} name='password' label='password' type='password' />
         <FormInput value={userCreds.confirm_password} onChange={handleChange} name='confirm_password' label='confirm password' type='password' />
         <CustomButton type='submit'>Sign up</CustomButton>

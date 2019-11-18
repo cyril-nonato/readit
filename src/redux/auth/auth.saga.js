@@ -1,17 +1,22 @@
-import { call, all, put, takeLeading, takeLatest } from 'redux-saga/effects'
-import rsf, { firebase } from '../../firebase-redux-saga/firebase-redux-saga'
+import { call, all, put, takeLeading, takeLatest, take } from 'redux-saga/effects'
+import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './auth.types'
-import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure } from './auth.actions';
+import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure, checkAuthUserRequestSuccess, checkAuthUserRequestFailure } from './auth.actions';
 
 // gets user creds from firebase
 function* getUserCreds(user) {
-  const snapshot = yield call(rsf.firestore.getDocument, `users/${user.uid}`);
-  const data = yield snapshot.data();
-  const userCreds = {
-    ...data,
-    user_id: user.uid
+  const querySnapshot = yield call(rsf.firestore.getDocument, firestore.doc(`users/${user.uid}`))
+
+  try {
+    const data = yield querySnapshot.data();
+    const userCreds = {
+      ...data,
+      uid: user.uid
+    }
+    return userCreds
+  } catch(error) {
+    throw Error ('Error getting user creds')
   }
-  return userCreds
 }
 
 function* signUpRequestSagaAsync({ payload: { userCreds: { email, password, confirm_password, ...others } } }) {
@@ -47,7 +52,7 @@ function* signInRequestSagaAsync({ payload: { userCreds: { email, password } } }
     const { user } = yield call(rsf.auth.signInWithEmailAndPassword, email, password);
 
     const userCreds = yield call(getUserCreds, user);
-
+    console.log(userCreds);
     yield put(signInRequestSuccess(userCreds));
   } catch (error) {
     yield put(signInRequestFailure(error.message));
@@ -76,6 +81,6 @@ export function* authSaga() {
   yield all([
     call(signUpRequestSaga),
     call(signInRequestSaga),
-    call(signOutRequestSaga)
+    call(signOutRequestSaga),
   ])
 }

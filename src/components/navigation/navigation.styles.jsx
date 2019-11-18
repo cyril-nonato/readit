@@ -22,7 +22,7 @@ export const Navigation = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: ${props => props.theme.navigation.background};
+  background-color: ${props => props.theme.primary};
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     padding: 0 5rem;
@@ -107,7 +107,7 @@ export const UserOptions = styled.div`
 export const Button = styled.button`
   border: none;
   width: 4.5rem;
-  background-color: ${props => props.theme.navigation.userOptions.buttonBackgroundColor};
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -121,7 +121,7 @@ export const Button = styled.button`
 export const Triangle = styled.div`
   height: .75rem;
   width: 1.25rem;
-  background-color: ${props => props.theme.navigation.userOptions.triangleBackgroundColor};
+  background-color: ${props => props.theme.tertiary};
   clip-path: polygon(0 0, 52% 100%, 100% 0);
 `;
 
@@ -129,8 +129,8 @@ export const Text = styled.span`
   padding: .5rem 1rem;
   font-size: 1.2rem;
   display: none;
-  background-color: ${props => props.theme.navigation.iconsColor};
-  color: ${props => props.theme.secondary};
+  background-color: ${props => props.theme.quinary};
+  color: ${props => props.theme.primary};
   position: absolute;
   bottom: -4rem;
   left: 50%;
@@ -142,7 +142,7 @@ export const PopularIcon = styled.div`
   height: 18px;
   width: 15px;
   clip-path: polygon(2% 57%, 50% 0, 100% 55%, 67% 56%, 68% 100%, 35% 100%, 35% 58%);
-  background-color: ${props => props.theme.navigation.iconsColor};
+  background-color: ${props => props.theme.quinary};
 `;
 
 const IconsContainerStyles = css`
@@ -153,7 +153,7 @@ const IconsContainerStyles = css`
 
   &:hover {
     cursor: pointer;
-    background-color: ${props => props.theme.navigation.backgroundLink};
+    background-color: ${props => props.theme.quarternary};
   }
 
   &:hover ${Text} {
@@ -172,21 +172,21 @@ export const AllBoxIconSmaller = styled.div`
   height: 20px;
   width: 8px;
   clip-path: polygon(0 76%, 100% 75%, 100% 100%, 0 100%);
-  background-color: ${props => props.theme.navigation.iconsColor};
+  background-color: ${props => props.theme.quinary};
 `;
 
 export const AllBoxIconBigger = styled.div`
   height: 20px;
   width: 8px;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  background-color: ${props => props.theme.navigation.iconsColor};
+  background-color: ${props => props.theme.quinary};
 `;
 
 export const AllArrowIcon = styled.div`
   height: 20px;
   width: 10px;
   clip-path: polygon(0 50%, 48% 9%, 100% 49%, 79% 50%, 80% 100%, 25% 100%, 25% 51%);
-  background-color: ${props => props.theme.navigation.iconsColor};
+  background-color: ${props => props.theme.quinary};
 `;
 
 export const AllContainer = styled(Link)`
@@ -195,7 +195,7 @@ export const AllContainer = styled(Link)`
 `;
 
 export const CreatePostIcon = styled.div`
-background-color: ${props => props.theme.navigation.iconsColor};
+background-color: ${props => props.theme.quinary};
   clip-path: polygon(73% 0, 100% 24%, 25% 100%, 0 100%, 0 73%);
   height: 20px;
   width: 20px;
@@ -203,7 +203,7 @@ background-color: ${props => props.theme.navigation.iconsColor};
 
 export const CreatePostContainer = styled(Link)`
   ${IconsContainerStyles};
-`
+`;
 
 
 
