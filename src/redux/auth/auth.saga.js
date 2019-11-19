@@ -2,6 +2,7 @@ import { call, all, put, takeLeading, takeLatest, take } from 'redux-saga/effect
 import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './auth.types'
 import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure, checkAuthUserRequestSuccess, checkAuthUserRequestFailure } from './auth.actions';
+import { votesCheckRequest } from '../votes/votes.actions';
 
 // gets user creds from firebase
 function* getUserCreds(user) {
@@ -19,23 +20,28 @@ function* getUserCreds(user) {
   }
 }
 
-function* signUpRequestSagaAsync({ payload: { userCreds: { email, password, confirm_password, ...others } } }) {
+function* signUpRequestSagaAsync({ payload: { userCreds: { email, password, confirm_password, username } } }) {
   try {
 
     const { user } = yield call(rsf.auth.createUserWithEmailAndPassword, email, password);
     const userCreds = {
       email,
-      ...others,
+      username,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
+    }
+    // Checks for any username matching
+    const querySnapshot = yield call(rsf.firestore.getDocument, firestore.doc(`userslist/${username}`))
+    if(querySnapshot.exists) {
+      throw Error('Username already in use');
     }
 
     // Adds user creds to firebase
     yield call(rsf.firestore.setDocument, `users/${user.uid}`, userCreds);
-
+    yield call(rsf.firestore.setDocument, `userslist/${username}`, {username: username})
     // gets user creds from firebase
-    const userCredsFromFirebase = yield call(getUserCreds, user);
-
+    const userCredsFromFirebase = yield call(getUserCreds, user, username);
     yield put(signUpRequestSuccess(userCredsFromFirebase));
+    yield put(votesCheckRequest());
   } catch (error) {
     yield console.log(error.message);
   }
@@ -54,6 +60,7 @@ function* signInRequestSagaAsync({ payload: { userCreds: { email, password } } }
     const userCreds = yield call(getUserCreds, user);
     console.log(userCreds);
     yield put(signInRequestSuccess(userCreds));
+    yield put(votesCheckRequest());
   } catch (error) {
     yield put(signInRequestFailure(error.message));
   }

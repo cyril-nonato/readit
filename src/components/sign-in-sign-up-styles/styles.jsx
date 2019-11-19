@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {Link} from 'react-router-dom'
 import Side from '../../assets/side.jpg'
 
@@ -39,21 +39,23 @@ export const Form = styled.form`
   margin-right: 1.25rem;
 
 
-  div input {
+  input,
+  textarea {
     width: 100%;
     margin-bottom: 1rem;
   }
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
-    div input {
-    width: 50%;
+    input,
+    textarea {
+      width: 70%;
     }
   }
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
-    div input {
-    min-width: 30%;
-    max-width: 32rem;
+    input,
+    textarea {
+      width: 40%;
     }
   }
 `;

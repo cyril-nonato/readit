@@ -1,4 +1,4 @@
-import { call, all, takeLatest, select, take, fork, put } from 'redux-saga/effects'
+import { call, all, takeLeading, select, take, fork, put } from 'redux-saga/effects'
 import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './votes.types'
 import { selectAuthUserCreds } from '../auth/auth.selector';
@@ -42,7 +42,7 @@ function* voteUpRequestSagaAsync({ payload: { id, value } }) {
 }
 
 function* voteUpRequestSaga() {
-  yield takeLatest(actionTypes.VOTE_UP_REQUEST, voteUpRequestSagaAsync)
+  yield takeLeading(actionTypes.VOTE_UP_REQUEST, voteUpRequestSagaAsync)
 }
 
 function* voteDownRequestSagaAsync({ payload: { id, value } }) {
@@ -79,7 +79,7 @@ function* voteDownRequestSagaAsync({ payload: { id, value } }) {
 }
 
 function* voteDownRequestSaga() {
-  yield takeLatest(actionTypes.VOTE_DOWN_REQUEST, voteDownRequestSagaAsync)
+  yield takeLeading(actionTypes.VOTE_DOWN_REQUEST, voteDownRequestSagaAsync)
 }
 
 function* votesCheckRequestSagaAsync() {

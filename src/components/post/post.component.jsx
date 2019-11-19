@@ -2,15 +2,18 @@ import React from 'react';
 
 import * as S from './post.styles'
 import VoteContainer from '../votes/votes.container';
+import timeAgo from '../utils/timeAgo';
 
 const Post = ({ post }) => {
   const { id, title, text, sub_readit, created_at, created_by, votes } = post
+  const time = timeAgo(created_at);
 
   return (
     <S.Item>
       <S.InfoContainer>
         <S.SubReaditName>r/{sub_readit}</S.SubReaditName>
-        <S.Owner>Posted by: u/{created_by}</S.Owner>
+        <S.Owner>Posted by: {created_by}</S.Owner>
+        <S.Time>{time}</S.Time>
       </S.InfoContainer>
       <S.ContentContainer>
         <S.Title>{title}</S.Title>

@@ -1,14 +1,45 @@
-import styled from 'styled-components'
-import {Link} from 'react-router-dom'
-import Side from '../../assets/side.jpg'
+import styled, { css } from 'styled-components'
 
-export const DivButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  height: 100%;
+export const mediaWidthSize = css`
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    width: 70%;
+  }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    width: 40%;
+  }
 `;
+
+export const H3 = styled.h3`
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  font-size: 1.8rem;
+  color: ${props => props.theme.tertiary};
+  border-bottom: 1px solid ${props => props.theme.quarternary};
+  ${mediaWidthSize};
+`;
+
+const activePost = css`
+  border-bottom: 2px solid ${props => props.theme.secondary};
+`;
+
+const linkPost = css`
+  border-bottom: 2px solid ${props => props.theme.secondary};
+`;
+
+const checkActiveLink = props => {
+  if (props.active === 'link') {
+    return linkPost
+  }
+}
+
+const checkActivePost = props => {
+  if (props.active === 'post') {
+    return activePost;
+  }
+  return null;
+}
 
 export const PostIcon = styled.span`
   height: 20px;
@@ -96,18 +127,61 @@ export const LinkIconContainer = styled.div`
 
 export const Text = styled.span`
   padding-left: 1.5rem;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: bold;
   color: ${props => props.theme.tertiary};
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    font-size: 1.4rem;
+  }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    font-size: 1.6rem;
+  }
   
 `;
+
+export const LinkPostContainerStyles = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  border: 1px solid ${props => props.theme.quarternary};
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${props => props.theme.quarternary};
+  }
+`
+
+export const LinkContainer = styled.div`
+  ${LinkPostContainerStyles};
+`
+
+export const PostContainer = styled.div`
+  ${LinkPostContainerStyles};
+`
+
 
 export const ButtonContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 50px;
 
-  
+  ${PostContainer} {
+    ${checkActivePost};
+  }
 
+  ${LinkContainer} {
+    ${checkActiveLink};
+  }
 
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    width: 70%;
+  }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    width: 40%;
+  }
 `;

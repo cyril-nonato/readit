@@ -8,26 +8,42 @@ export const Item = styled.li`
   width: 100%;
 
   display: grid;
-  grid-template-columns: 4fr 20fr;
+  grid-template-columns: 1fr 10fr;
   grid-auto-rows: auto;
   grid-gap: .75rem;
+  grid-template-areas: 
+    "info info"
+    "content content"
+    "votes comments";
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    grid-template-columns: 1.5fr 25fr;
+    grid-template-areas: 
+      "votes info"
+      "votes content"
+      "votes comments";
+  }
 `;
 
 export const SubReaditName = styled.span`
-  padding-right: 1rem;
+  padding-right: .5rem;
   font-weight: bold;
 `;
 
 export const Owner = styled.span`
   color: ${props => props.theme.tertiary};
+  padding-right: .5rem;
+`;
+
+export const Time = styled.span`
+  color: ${props => props.theme.tertiary};
 `;
 
 export const InfoContainer = styled.div`
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
   font-size: 1.2rem;
   min-height: auto;
   max-height: 4rem;
+  grid-area: info;
 `;
 
 export const Title = styled.h4`
@@ -49,9 +65,8 @@ export const Cover = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-  grid-column: 1 / 3;
-  grid-row: 2 / 3;
   position: relative;
+  grid-area: content;
 
   min-height: auto;
   max-height: 32rem;
@@ -81,13 +96,17 @@ export const BackgroundContainer = styled.div`
 `;
 
 export const CommentsContainer = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 3 / 4;
-  height: 100%;
-  min-width: 40%;
-  max-width: 45%;
+  height: 30px;
+  min-width: 25%;
+  max-width: 60%;
   border-radius: 3px;
   overflow: hidden;
+  grid-area: comments;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    min-width: 16%;
+    max-width: 16%;
+  }
 
   &:hover {
     cursor: pointer;

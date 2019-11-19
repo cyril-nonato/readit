@@ -35,11 +35,11 @@ const Navigation = ({ selectAuthUserCreds }) => {
         <S.BrandText>redditzilla</S.BrandText>
       </S.BrandContainer>
       <div>&nbsp;</div>
-      <S.PopularContainer to='/r/popular'>
+      <S.PopularContainer to='/'>
         <S.PopularIcon />
         <S.Text>Popular</S.Text>
       </S.PopularContainer>
-      <S.AllContainer to='/r/all'>
+      <S.AllContainer to='/all'>
         <S.AllBoxIconSmaller />
         <S.AllArrowIcon />
         <S.AllBoxIconBigger />

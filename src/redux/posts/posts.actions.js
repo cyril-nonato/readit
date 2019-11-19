@@ -1,7 +1,8 @@
 import actionTypes from "./posts.types";
 
-export const postsRequest = () => ({
-  type: actionTypes.POSTS_REQUEST
+export const postsRequest = (parameter) => ({
+  type: actionTypes.POSTS_REQUEST,
+  payload: { parameter }
 });
 
 export const postsRequestSuccess = (posts, message) => ({

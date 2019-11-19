@@ -35,9 +35,9 @@ function App() {
             <Route path='/login' component={SignInPage} />
             <Route path='/register' component={SignUpPage} />
             <Route path='/logout' component={SignOutContainer} />
-            <Route exact path='/' component={HomePageContainer} />
-            <Route path='/r/popular' component={HomePageContainer} />
             <Route path='/create-post' component={CreatePostPageContainer} />
+            <Route exact path='/' component={HomePageContainer} />
+            <Route exact path='/:homeParams' component={HomePageContainer} />
           </Switch>
         </ThemeProvider>
       </Router>

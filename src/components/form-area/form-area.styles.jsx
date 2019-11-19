@@ -64,6 +64,7 @@ export const Input = styled.textarea`
   width: inherit;
   font-family: inherit;
   border-radius: 5px;
+  width: 100%;
 
   ~ ${Label} {
     ${labelPos}

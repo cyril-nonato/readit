@@ -12,7 +12,6 @@ export const Up = styled.div`
 
   &:hover {
     background-color: ${props => props.theme.vote.up};
-    
   }
 `;
 
@@ -41,20 +40,36 @@ export const ArrowContainer = styled.div`
   &:hover ${Down} {
     background-color: ${props => props.theme.vote.down};
   }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    height: 20px;
+    width: 20px;
+  }
 `;
 
 export const VoteValue = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
   padding: 0 .5rem;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    padding: 0;
+    font-size: 1.4rem;
+  }
+
 `;
 
 export const VotesContainer = styled.div`
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-
+  grid-area: votes;
   min-height: auto;
   max-height: 4rem;
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
 `;

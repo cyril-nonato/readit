@@ -12,19 +12,39 @@ export const SubNav = styled.div`
   padding: 0 3rem;
 `;
 
+export const Subs = styled.div`
+  display: none;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    grid-column: 2 / 3;
+    display: block;
+  }
+`;
+
+export const Posts = styled.div`
+  grid-column: 1 / 3;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    grid-column: 1 / 2;
+  }
+
+`
+
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 70% 30%;
+
   margin: 0 .5rem;
 
-  @media only screen and (min-width: ${props => props.theme.mediaQueries.widnows}) {
-    grid-template-columns: 2fr 1fr;
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    grid-gap: 2rem;
   }
+
 `;
 
 export const Container = styled.div`
 
   ${Grid} {
-    margin-top: 5rem;
+    margin: 5rem;
   }
 `;

@@ -4,9 +4,20 @@ import actionTypes from './posts.types'
 import { docsToMap } from '../utils';
 import { postsRequestSuccess, postsRequestFailure } from './posts.actions';
 
-function* postsRequestSagaAsync() {
-  const channel = yield call(rsf.firestore.channel, 
-    firestore.collection('posts').orderBy('votes', 'desc'));
+function* postsRequestSagaAsync(parameter) {
+  let channel;
+
+  switch (parameter) {
+    case 'all':
+      channel = yield call(rsf.firestore.channel,
+        firestore.collection('posts').orderBy('created_at', 'desc'));
+      break;
+    case '':
+      channel = yield call(rsf.firestore.channel,
+        firestore.collection('posts').orderBy('votes', 'desc'));
+      break;
+    default: throw Error('not found');
+  }
 
   try {
     while (true) {
@@ -21,10 +32,9 @@ function* postsRequestSagaAsync() {
 }
 
 function* postsRequestSaga() {
-  while ( yield take(actionTypes.POSTS_REQUEST)) {
-    const sync = yield fork(postsRequestSagaAsync);
+  const { payload: { parameter } } = yield take(actionTypes.POSTS_REQUEST)
+  const sync = yield fork(postsRequestSagaAsync, parameter);
 
-  }
 }
 
 export function* postsSaga() {
