@@ -12,6 +12,7 @@ import HomePageContainer from './pages/home-page/home-page.container';
 import { selectAuthUserCreds } from './redux/auth/auth.selector';
 import { votesCheckRequest } from './redux/votes/votes.actions';
 import CreatePostPageContainer from './pages/create-post-page/create-post-page.container';
+import SubReaditPostsPageContainer from './pages/sub-readit-posts-page/sub-readit-posts-page.container';
 
 function App() {
   const userCreds = useSelector(selectAuthUserCreds);
@@ -36,6 +37,7 @@ function App() {
             <Route path='/register' component={SignUpPage} />
             <Route path='/logout' component={SignOutContainer} />
             <Route path='/create-post' component={CreatePostPageContainer} />
+            <Route path='/r/:subReadit' component={SubReaditPostsPageContainer} />
             <Route exact path='/' component={HomePageContainer} />
             <Route exact path='/:homeParams' component={HomePageContainer} />
           </Switch>

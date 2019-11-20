@@ -3,8 +3,19 @@ import React, { useEffect } from 'react'
 import * as S from './home-page.styles'
 import PostsContainer from '../../components/posts/posts.container';
 import SubReaditsContainer from '../../components/sub-readits/sub-readits.container';
+import SubReadits from '../../components/sub-readits/sub-readits.component';
 
-const HomePage = ({ onSubreaditRequest, onPostsRequest, selectSubReaditList, selectPostsAllPosts, loadingPost, loadingSubs, match }) => {
+const HomePage = ({ 
+  onSubreaditListsRequest, 
+  onPostsRequest, 
+  selectSubReaditLists, 
+  selectPostsAllPosts, 
+  loadingPosts, 
+  loadingSubs, 
+  match 
+}) => {
+  console.log('ye');
+  
   useEffect(() => {
     if (!selectPostsAllPosts) {
       onPostsRequest(match.params.homeParams);
@@ -12,12 +23,12 @@ const HomePage = ({ onSubreaditRequest, onPostsRequest, selectSubReaditList, sel
   }, [onPostsRequest, selectPostsAllPosts, match]);
 
   useEffect(() => {
-    if (!selectSubReaditList) {
-      onSubreaditRequest()
+    if (!selectSubReaditLists) {
+      onSubreaditListsRequest()
     }
 
-  }, [onSubreaditRequest, selectSubReaditList])
-
+  }, [onSubreaditListsRequest, selectSubReaditLists]);
+  console.log(loadingPosts);
   return (
     <S.Container>
       <S.SubNav>
@@ -25,11 +36,12 @@ const HomePage = ({ onSubreaditRequest, onPostsRequest, selectSubReaditList, sel
       </S.SubNav>
       <S.Grid>
         <S.Posts>
-          <PostsContainer posts={selectPostsAllPosts} loading={loadingPost} />
+          <PostsContainer posts={selectPostsAllPosts} loading={loadingPosts} />
         </S.Posts>
         <S.Subs>
-          <SubReaditsContainer lists={selectSubReaditList} loading={loadingSubs} />
+          <SubReaditsContainer lists={selectSubReaditLists} loading={loadingSubs} />
         </S.Subs>
+        <SubReaditsContainer loading={loadingSubs} lists={selectSubReaditLists} />
       </S.Grid>
 
     </S.Container>

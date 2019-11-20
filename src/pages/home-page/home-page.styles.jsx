@@ -28,7 +28,7 @@ export const Posts = styled.div`
     grid-column: 1 / 2;
   }
 
-`
+`;
 
 export const Grid = styled.div`
   display: grid;

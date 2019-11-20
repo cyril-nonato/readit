@@ -1,34 +1,56 @@
-import { call, all, put, take, fork } from 'redux-saga/effects'
+import { call, all, put, take, fork, takeLeading } from 'redux-saga/effects'
 import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 
 import { docsToMap } from '../utils';
 import actionTypes from './sub-readit.types';
-import { subReaditRequestSuccess, subReaditRequestFailure } from './sub-readit.actions';
+import { subReaditListsRequestSuccess, subReaditListsRequestFailure, subReaditRequestSuccess, subReaditRequestFailure } from './sub-readit.actions';
 
-function* subReaditRequestSagaAsync() {
+function* subReaditListsRequestSagaAsync() {
   const channel = yield call(rsf.firestore.channel, 
-    firestore.collection('subreadit'));
+    firestore.collection('subReadit'));
 
   try {
     while (true) {
       const querySnapshot = yield take(channel);
       const docs = querySnapshot.docs;
       const lists = docsToMap(docs);
-      yield put(subReaditRequestSuccess(lists, 'Fetched success'));
+      yield put(subReaditListsRequestSuccess(lists, 'Fetched success'));
     }
   } catch (error) {
-    yield put(subReaditRequestFailure(error.message));
+    yield put(subReaditListsRequestFailure(error.message));
   }
 }
 
-function* subReaditRequestSaga() {
-  while (yield take(actionTypes.SUB_READIT_REQUEST)) {
-    const sync = yield fork(subReaditRequestSagaAsync);
+function* subReaditListsRequestSaga() {
+  yield take(actionTypes.SUB_READIT_LISTS_REQUEST);
+  const sync = yield fork(subReaditListsRequestSagaAsync);
+}
+
+function* subReaditRequestSagaAsync({payload: {name}}) {
+  try {
+    const querySnapshot = yield call(rsf.firestore.getDocument, `subReadit/${name}`);
+    if(!querySnapshot.exists) {
+      throw Error('Not found');
+    }
+    const data = querySnapshot.data();
+    const subReadit = {
+      ...data,
+      id: querySnapshot.id
+    }
+    yield put(subReaditRequestSuccess(subReadit));
+  } catch (error) {
+    yield put(subReaditRequestFailure(error.message));
   }
+
+}
+
+function* subReaditRequestSaga() {
+  yield takeLeading(actionTypes.SUB_READIT_REQUEST, subReaditRequestSagaAsync);
 }
 
 export function* subReaditSaga() {
   yield all([
+    call(subReaditListsRequestSaga),
     call(subReaditRequestSaga)
   ])
 }

@@ -14,3 +14,18 @@ export const postsRequestFailure = (message) => ({
   type: actionTypes.POSTS_REQUEST_FAILURE,
   payload: { message }
 });
+
+export const postFilterBySubReaditRequest = (subReadit) => ({
+  type: actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST,
+  payload: { subReadit }
+});
+
+export const postFilterBySubReaditRequestSuccess = (posts, message = 'success') => ({
+  type: actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST_SUCCESS,
+  payload: { posts, message }
+});
+
+export const postFilterBySubReaditRequestFailure = (posts, message = 'failure') => ({
+  type: actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST_FAILURE,
+  payload: { posts, message }
+});

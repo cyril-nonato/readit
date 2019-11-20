@@ -19,6 +19,7 @@ export const Navigation = styled.div`
   grid-template-rows: 50px;
   grid-gap: 1rem;
   position: fixed;
+  z-index: 25;
   top: 0;
   left: 0;
   width: 100%;

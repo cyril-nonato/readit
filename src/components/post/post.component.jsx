@@ -5,13 +5,13 @@ import VoteContainer from '../votes/votes.container';
 import timeAgo from '../utils/timeAgo';
 
 const Post = ({ post }) => {
-  const { id, title, text, sub_readit, created_at, created_by, votes } = post
+  const { id, title, text, subReadit, created_at, created_by, votes } = post
   const time = timeAgo(created_at);
 
   return (
     <S.Item>
       <S.InfoContainer>
-        <S.SubReaditName>r/{sub_readit}</S.SubReaditName>
+        <S.SubReaditName>r/{subReadit}</S.SubReaditName>
         <S.Owner>Posted by: {created_by}</S.Owner>
         <S.Time>{time}</S.Time>
       </S.InfoContainer>

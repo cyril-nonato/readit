@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import Post from '../post/post.component';
 
 import * as S from './posts.styles'
+import Post from '../post/post.component';
 
 const Posts = ({ posts }) => {
-
   return (
     <S.List>
       {

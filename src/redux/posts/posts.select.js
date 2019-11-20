@@ -8,6 +8,16 @@ export const selectPostsAllPosts = createSelector(
 );
 
 export const selectPostsAllPostsIsLoading = createSelector(
-  [selectPostsAllPosts],
-  allPosts => !!allPosts
-)
+  [selectPosts],
+  posts => !!posts.allPosts
+);
+
+export const selectPostsFilteredPosts = createSelector(
+  [selectPosts],
+  posts => posts.filteredPosts
+);
+
+export const selectPostsFilteredPostsIsLoading = createSelector(
+  [selectPostsFilteredPosts],
+  filteredPosts => !!filteredPosts
+);

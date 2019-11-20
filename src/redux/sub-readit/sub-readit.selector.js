@@ -2,12 +2,23 @@ import {createSelector} from 'reselect'
 
 const selectSubReadit = state => state.subReadit;
 
-export const selectSubReaditList = createSelector(
+export const selectSubReaditLists = createSelector(
   [selectSubReadit],
-  selectSubReadit => selectSubReadit.lists
+  subReadit => subReadit.lists
 );
 
-export const selectSubReaditListIsLoading = createSelector(
+export const selectSubReaditListsIsLoading = createSelector(
   [selectSubReadit],
   selectSubReadit => !!selectSubReadit.lists
+);
+
+export const selectSubReaditSub = createSelector(
+  [selectSubReadit],
+  subReadit => subReadit.sub
+);
+
+
+export const selectSubReaditSubIsLoading = createSelector(
+  [selectSubReadit],
+  subReadit => !!subReadit.sub
 );

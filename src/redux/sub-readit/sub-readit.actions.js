@@ -1,15 +1,30 @@
 import actionTypes from "./sub-readit.types";
 
-export const subReaditRequest = () => ({
-  type: actionTypes.SUB_READIT_REQUEST
+export const subReaditListsRequest = () => ({
+  type: actionTypes.SUB_READIT_LISTS_REQUEST
 });
 
-export const subReaditRequestSuccess = (lists, message = 'success') => ({
-  type: actionTypes.SUB_READIT_REQUEST_SUCCESS,
+export const subReaditListsRequestSuccess = (lists, message = 'success') => ({
+  type: actionTypes.SUB_READIT_LISTS_REQUEST_SUCCESS,
   payload: { lists, message }
 });
 
-export const subReaditRequestFailure = (message = 'failure') => ({
-  type: actionTypes.SUB_READIT_REQUEST_FAILURE,
+export const subReaditListsRequestFailure = (message = 'failure') => ({
+  type: actionTypes.SUB_READIT_LISTS_REQUEST_FAILURE,
   payload: { message }
+});
+
+export const subReaditRequest = (name) => ({
+  type: actionTypes.SUB_READIT_REQUEST,
+  payload: { name }
+});
+
+export const subReaditRequestSuccess = (subReadit, message = 'success') => ({
+  type: actionTypes.SUB_READIT_REQUEST_SUCCESS,
+  payload: { subReadit, message }
+});
+
+export const subReaditRequestFailure = (subReadit, message = 'failure') => ({
+  type: actionTypes.SUB_READIT_REQUEST_FAILURE,
+  payload: { subReadit, message }
 });
