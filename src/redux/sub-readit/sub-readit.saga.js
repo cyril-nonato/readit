@@ -1,9 +1,9 @@
-import { call, all, put, take, fork, takeLeading } from 'redux-saga/effects'
+import { call, all, put, take, fork, takeLeading, cancel, cancelled } from 'redux-saga/effects'
 import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 
 import { docsToMap } from '../utils';
 import actionTypes from './sub-readit.types';
-import { subReaditListsRequestSuccess, subReaditListsRequestFailure, subReaditRequestSuccess, subReaditRequestFailure } from './sub-readit.actions';
+import { subReaditListsRequestSuccess, subReaditListsRequestFailure, subReaditRequestSuccess, subReaditRequestFailure, subReaditCancelledRequest } from './sub-readit.actions';
 
 function* subReaditListsRequestSagaAsync() {
   const channel = yield call(rsf.firestore.channel, 
@@ -18,12 +18,18 @@ function* subReaditListsRequestSagaAsync() {
     }
   } catch (error) {
     yield put(subReaditListsRequestFailure(error.message));
+  } finally {
+    if(yield cancelled()) {
+      yield put(subReaditCancelledRequest())
+    }
   }
 }
 
 function* subReaditListsRequestSaga() {
   yield take(actionTypes.SUB_READIT_LISTS_REQUEST);
   const sync = yield fork(subReaditListsRequestSagaAsync);
+  yield take(actionTypes.SUB_READIT_CANCEL_REQUEST);
+  yield cancel(sync);
 }
 
 function* subReaditRequestSagaAsync({payload: {name}}) {
@@ -41,7 +47,6 @@ function* subReaditRequestSagaAsync({payload: {name}}) {
   } catch (error) {
     yield put(subReaditRequestFailure(error.message));
   }
-
 }
 
 function* subReaditRequestSaga() {

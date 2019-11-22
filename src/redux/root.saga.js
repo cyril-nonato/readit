@@ -3,12 +3,14 @@ import { authSaga } from './auth/auth.saga'
 import { postsSaga } from './posts/posts.saga'
 import { votesSaga } from './votes/votes.saga'
 import { subReaditSaga } from './sub-readit/sub-readit.saga'
+import { crudPostSaga } from './crud-post/crud-post.saga'
 
 export default function* rootSaga() {
   yield all([
     call(authSaga),
     call(postsSaga),
     call(votesSaga),
-    call(subReaditSaga)
+    call(subReaditSaga),
+    call(crudPostSaga)
   ])
 }

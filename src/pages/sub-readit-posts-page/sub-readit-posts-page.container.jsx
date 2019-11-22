@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { postFilterBySubReaditRequest } from '../../redux/posts/posts.actions';
+import { postFilterBySubReaditRequest, postsCancelRequest } from '../../redux/posts/posts.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectPostsFilteredPosts, selectPostsFilteredPostsIsLoading } from '../../redux/posts/posts.select';
 import { subReaditRequest } from '../../redux/sub-readit/sub-readit.actions';
@@ -16,6 +16,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   onPostFilterBySubReaditRequest: (subReadit) => dispatch(postFilterBySubReaditRequest(subReadit)),
+  onPostsCancelRequest: () => dispatch(postsCancelRequest()),
   onSubReaditRequest: (subReadit) => dispatch(subReaditRequest(subReadit))
 });
 

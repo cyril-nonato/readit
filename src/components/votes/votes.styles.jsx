@@ -61,8 +61,7 @@ export const VoteValue = styled.div`
 
 export const VotesContainer = styled.div`
   grid-area: votes;
-  min-height: auto;
-  max-height: 4rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;

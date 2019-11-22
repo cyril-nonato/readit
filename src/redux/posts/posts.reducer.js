@@ -53,6 +53,14 @@ const postsReducer = (state = INITIAL_STATE, action) => {
         failure: action.payload.message,
         popUp: true,
       }
+    case actionTypes.POSTS_CANCELLED_REQUEST:
+      return {
+        ...state,
+        success: action.payload.message,
+        allPosts: null,
+        filteredPosts: null,
+        popUp: true,
+      }
     default: return state;
   }
 }

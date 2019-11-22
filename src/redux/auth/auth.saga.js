@@ -1,8 +1,8 @@
-import { call, all, put, takeLeading, takeLatest, take } from 'redux-saga/effects'
+import { call, all, put, takeLeading, takeLatest } from 'redux-saga/effects'
 import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './auth.types'
-import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure, checkAuthUserRequestSuccess, checkAuthUserRequestFailure } from './auth.actions';
-import { votesCheckRequest } from '../votes/votes.actions';
+import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure, } from './auth.actions';
+import { votesCheckCancelRequest, votesCheckRequest } from '../votes/votes.actions';
 
 // gets user creds from firebase
 function* getUserCreds(user) {
@@ -37,10 +37,13 @@ function* signUpRequestSagaAsync({ payload: { userCreds: { email, password, conf
 
     // Adds user creds to firebase
     yield call(rsf.firestore.setDocument, `users/${user.uid}`, userCreds);
-    yield call(rsf.firestore.setDocument, `userslist/${username}`, {username: username})
+    yield call(rsf.firestore.setDocument, `votes/${username}`, {uid: user.uid});
+    
     // gets user creds from firebase
     const userCredsFromFirebase = yield call(getUserCreds, user, username);
     yield put(signUpRequestSuccess(userCredsFromFirebase));
+    
+    // Listens to votes live changes
     yield put(votesCheckRequest());
   } catch (error) {
     yield console.log(error.message);
@@ -54,12 +57,14 @@ function* signUpRequestSaga() {
 
 function* signInRequestSagaAsync({ payload: { userCreds: { email, password } } }) {
   try {
-    //Authenticate user using email and password
+    // Authenticate user using email and password
     const { user } = yield call(rsf.auth.signInWithEmailAndPassword, email, password);
-
+    
+    // Gets user creds from firebase
     const userCreds = yield call(getUserCreds, user);
-    console.log(userCreds);
     yield put(signInRequestSuccess(userCreds));
+
+    // Listens to votes live changes
     yield put(votesCheckRequest());
   } catch (error) {
     yield put(signInRequestFailure(error.message));
@@ -74,6 +79,7 @@ function* signInRequestSaga() {
 function* signOutRequestSagaAsync() {
   try {
     yield call(rsf.auth.signOut);
+    yield put(votesCheckCancelRequest());
     yield put(signOutRequestSuccess('Logout out success'));
   } catch (error) {
     yield put(signOutRequestFailure(error.message));

@@ -1,7 +1,10 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+import { Link } from 'react-router-dom'
+
 
 export const Item = styled.li`
-  padding: .5rem 1rem;
+  padding: .5rem 1rem .25rem 1rem;
   border-radius: 5px;
   background-color: ${props => props.theme.primary};
   max-height: 42rem;
@@ -64,13 +67,21 @@ export const Cover = styled.div`
   left: 0;
 `;
 
-export const ContentContainer = styled.div`
+const ContentContainerStyles = css`
   position: relative;
   grid-area: content;
 
   min-height: auto;
   max-height: 32rem;
   overflow: hidden;
+`;
+
+export const ContentContainerLink = styled(Link)`
+  ${ContentContainerStyles};
+`;
+
+export const ContentContainer = styled.div`
+  ${ContentContainerStyles};
 `;
 
 
@@ -95,18 +106,18 @@ export const BackgroundContainer = styled.div`
   height: 100%;
 `;
 
-export const CommentsContainer = styled.div`
+const CommentsContainerStyles = css`
   height: 30px;
-  min-width: 25%;
-  max-width: 60%;
   border-radius: 3px;
   overflow: hidden;
   grid-area: comments;
+  width: 120px;
 
-  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
-    min-width: 16%;
-    max-width: 16%;
-  }
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    width: 150px;
+  };
+
+
 
   &:hover {
     cursor: pointer;
@@ -115,4 +126,12 @@ export const CommentsContainer = styled.div`
   &:hover ${BackgroundContainer} {
     background-color: ${props => props.theme.quarternary};
   }
+`;
+
+export const CommentsContainerLink = styled(Link)`
+  ${CommentsContainerStyles};
+`;
+
+export const CommentsContainer = styled.div`
+  ${CommentsContainerLink};
 `;

@@ -1,23 +1,12 @@
-import { call, all, put, take, fork } from 'redux-saga/effects'
-import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
+import { call, all, put, take, fork, cancel, cancelled } from 'redux-saga/effects'
+import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './posts.types'
 import { docsToMap } from '../utils';
-import { postsRequestSuccess, postsRequestFailure, postFilterBySubReaditRequestSuccess, postFilterBySubReaditRequestFailure } from './posts.actions';
+import { postsRequestSuccess, postsRequestFailure, postFilterBySubReaditRequestSuccess, postFilterBySubReaditRequestFailure, postsCancelledRequest } from './posts.actions';
 
 function* postsRequestSagaAsync(parameter) {
-  let channel;
-
-  switch (parameter) {
-    case 'all':
-      channel = yield call(rsf.firestore.channel,
-        firestore.collection('posts').orderBy('created_at', 'desc'));
-      break;
-    case undefined:
-      channel = yield call(rsf.firestore.channel,
-        firestore.collection('posts').orderBy('votes', 'desc'));
-      break;
-    default: throw Error('not found');
-  }
+  const channel = yield call(rsf.firestore.channel,
+    firestore.collection('posts').orderBy('created_at', 'desc'));
 
   try {
     while (true) {
@@ -28,21 +17,29 @@ function* postsRequestSagaAsync(parameter) {
     }
   } catch (error) {
     yield put(postsRequestFailure(error.message));
+  } finally {
+    if (yield cancelled()) {
+      yield put(postsCancelledRequest())
+    }
   }
 }
 
 function* postsRequestSaga() {
-  const { payload: { parameter } } = yield take(actionTypes.POSTS_REQUEST)
-  const sync = yield fork(postsRequestSagaAsync, parameter);
+  while (true) {
+    const { payload: { parameter } } = yield take(actionTypes.POSTS_REQUEST)
+    const sync = yield fork(postsRequestSagaAsync, parameter);
+    yield take(actionTypes.POSTS_CANCEL_REQUEST);
+    yield cancel(sync);
+  }
 
 }
 
 function* postFilterBySubReaditRequestSagaAsync(subReadit) {
-  const channel = yield call(rsf.firestore.channel, 
+  const channel = yield call(rsf.firestore.channel,
     firestore.collection(`posts`)
       .where('subReadit', "==", subReadit)
       .orderBy('created_at', 'desc')
-    );
+  );
 
   try {
     while (true) {
@@ -53,12 +50,20 @@ function* postFilterBySubReaditRequestSagaAsync(subReadit) {
     }
   } catch (error) {
     yield put(postFilterBySubReaditRequestFailure(error.message));
+  } finally {
+    if (yield cancelled()) {
+      yield put(postsCancelledRequest())
+    }
   }
 }
 
 function* postFilterBySubReaditRequestSaga() {
-  const { payload: { subReadit } } = yield take(actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST);
-  const sync = yield fork(postFilterBySubReaditRequestSagaAsync, subReadit);
+  while(true) {
+    const { payload: { subReadit } } = yield take(actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST);
+    const sync = yield fork(postFilterBySubReaditRequestSagaAsync, subReadit);
+    yield take(actionTypes.POSTS_CANCEL_REQUEST);
+    yield cancel(sync);
+  }
 }
 
 export function* postsSaga() {

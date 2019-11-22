@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+import {Link} from 'react-router-dom'
+
+export const Anchor = styled(Link)`
   display: flex;
   align-items: center;
   padding: 1rem;

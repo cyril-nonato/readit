@@ -43,3 +43,11 @@ export const votesCheckRequestFailure = (message = 'error') => ({
   type: actionTypes.VOTES_CHECK_REQUEST_FAILURE,
   payload: { message }
 });
+
+export const votesCheckCancelRequest = () => ({
+  type: actionTypes.VOTES_CHECK_CANCEL_REQUEST,
+});
+
+export const votesCheckCancelledRequest = () => ({
+  type: actionTypes.VOTES_CHECK_CANCELLED_REQUEST
+});

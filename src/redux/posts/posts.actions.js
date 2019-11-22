@@ -29,3 +29,12 @@ export const postFilterBySubReaditRequestFailure = (posts, message = 'failure') 
   type: actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST_FAILURE,
   payload: { posts, message }
 });
+
+export const postsCancelRequest = () => ({
+  type: actionTypes.POSTS_CANCEL_REQUEST
+});
+
+export const postsCancelledRequest = (message = 'request cancelled') => ({
+  type: actionTypes.POSTS_CANCELLED_REQUEST,
+  payload: message
+});

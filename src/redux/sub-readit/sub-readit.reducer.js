@@ -50,6 +50,11 @@ const subReaditReducer = (state = INITIAL_STATE, action) => {
         failure: action.payload.message,
         loading: false,
       }
+    case actionTypes.SUB_READIT_CANCELLED_REQUEST:
+      return {
+        ...state,
+        success: action.payload.message
+      }
     default: return state;
   }
 }

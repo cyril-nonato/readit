@@ -10,16 +10,24 @@ const SubReaditPostsPage = ({
   loadingSubs,
   selectPostsFilteredPosts,
   selectSubReaditSub,
+  onPostsCancelRequest,
   match: { params: { subReadit } }
 }) => {
 
   useEffect(() => {
     onPostFilterBySubReaditRequest(subReadit);
+
   }, [onPostFilterBySubReaditRequest, subReadit]);
 
   useEffect(() => {
     onSubReaditRequest(subReadit)
   }, [onSubReaditRequest, subReadit]);
+
+  useEffect(() => {
+    return () => {
+      onPostsCancelRequest();
+    }
+  }, [onPostsCancelRequest])
 
   return (
     <S.Container>
@@ -30,7 +38,6 @@ const SubReaditPostsPage = ({
           <PostsContainer posts={selectPostsFilteredPosts} loading={loadingPosts} />
         </S.Posts>
       </S.Grid>
-
     </S.Container>
   );
 }

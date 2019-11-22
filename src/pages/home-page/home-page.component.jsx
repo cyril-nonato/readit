@@ -3,32 +3,40 @@ import React, { useEffect } from 'react'
 import * as S from './home-page.styles'
 import PostsContainer from '../../components/posts/posts.container';
 import SubReaditsContainer from '../../components/sub-readits/sub-readits.container';
-import SubReadits from '../../components/sub-readits/sub-readits.component';
 
-const HomePage = ({ 
-  onSubreaditListsRequest, 
-  onPostsRequest, 
-  selectSubReaditLists, 
-  selectPostsAllPosts, 
-  loadingPosts, 
-  loadingSubs, 
-  match 
+const HomePage = ({
+  onSubReaditListsRequest,
+  onPostsRequest,
+  selectSubReaditLists,
+  selectPostsAllPosts,
+  selectAuthUserCreds,
+  loadingPosts,
+  loadingSubs,
+  onPostsCancelRequest,
+  onSubReaditCancelRequest,
 }) => {
-  console.log('ye');
-  
+
   useEffect(() => {
     if (!selectPostsAllPosts) {
-      onPostsRequest(match.params.homeParams);
+      onPostsRequest();
     }
-  }, [onPostsRequest, selectPostsAllPosts, match]);
+
+  }, [onPostsRequest, selectPostsAllPosts]);
 
   useEffect(() => {
     if (!selectSubReaditLists) {
-      onSubreaditListsRequest()
+      onSubReaditListsRequest()
     }
 
-  }, [onSubreaditListsRequest, selectSubReaditLists]);
-  console.log(loadingPosts);
+  }, [onSubReaditListsRequest, selectSubReaditLists]);
+
+  useEffect(() => {
+    return () => {
+      onPostsCancelRequest();
+      onSubReaditCancelRequest();
+    }
+  }, [onPostsCancelRequest, onSubReaditCancelRequest]);
+  console.log(selectAuthUserCreds);
   return (
     <S.Container>
       <S.SubNav>
@@ -41,7 +49,6 @@ const HomePage = ({
         <S.Subs>
           <SubReaditsContainer lists={selectSubReaditLists} loading={loadingSubs} />
         </S.Subs>
-        <SubReaditsContainer loading={loadingSubs} lists={selectSubReaditLists} />
       </S.Grid>
 
     </S.Container>

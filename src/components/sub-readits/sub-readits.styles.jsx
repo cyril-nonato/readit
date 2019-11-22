@@ -8,6 +8,12 @@ export const Container = styled.div`
   grid-auto-rows: 60px;
   background-color: ${props => props.theme.primary};
   border-radius: 5px;
+
+  display: none;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    display: block;
+  }
 `;
 
 export const CommunitiesContainer = styled.div`

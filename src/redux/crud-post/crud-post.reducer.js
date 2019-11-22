@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   failure: null,
   loading: false,
   popup: false,
+  post: null,
 }
 
 const crudPostReducer = (state = INITIAL_STATE, action) => {
@@ -23,6 +24,28 @@ const crudPostReducer = (state = INITIAL_STATE, action) => {
         popUp: true,
       }
     case actionTypes.CREATE_POST_REQUEST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: null,
+        failure: action.payload.message,
+        popUp: true,
+      }
+    case actionTypes.READ_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case actionTypes.READ_POST_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.message,
+        failure: null,
+        popUp: true,
+        post: action.payload.post
+      }
+    case actionTypes.READ_POST_REQUEST_FAILURE:
       return {
         ...state,
         loading: false,

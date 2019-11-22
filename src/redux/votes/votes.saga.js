@@ -1,39 +1,29 @@
-import { call, all, takeLeading, select, take, fork, put } from 'redux-saga/effects'
+import { call, all, takeLeading, select, take, fork, put, cancel, cancelled } from 'redux-saga/effects'
 import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './votes.types'
 import { selectAuthUserCreds } from '../auth/auth.selector';
-import { checkUpVoteOrNotVote, checkDownVoteOrNotVote } from './votes.utils';
-import { votesCheckRequestSuccess, votesCheckRequestFailure, voteUpRequestSuccess, voteDownRequestFailure, voteDownRequestSuccess, voteUpRequestFailure } from './votes.actions';
+import { votesCheckRequestSuccess, votesCheckRequestFailure, voteUpRequestSuccess, voteDownRequestFailure, voteDownRequestSuccess, voteUpRequestFailure, votesCheckCancelledRequest } from './votes.actions';
 import { selectVotesVotesList } from './votes.select';
-import { isEmpty } from '@firebase/util';
+import { checkUpVoteOrNotVote, checkDownVoteOrNotVote } from './votes.utils';
 
 function* voteUpRequestSagaAsync({ payload: { id, value } }) {
   try {
 
     const votesList = yield select(selectVotesVotesList);
-    const { uid } = yield select(selectAuthUserCreds);
-
-    // creates an object to firebase
-    if(isEmpty(votesList)) {
-      const obj = {
-        votes: {
-          [id]: true      
-        }
-      };
-
-      yield call(rsf.firestore.setDocument, `votes/${uid}`, obj);
-      yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value + 1));
-      yield put(voteUpRequestSuccess());
-      return;
-    }
-    // if it returns true, user already upvoted
-    const downVoteOrNotVote = checkUpVoteOrNotVote(votesList, id);
-
-    if (downVoteOrNotVote) {
+    const { username } = yield select(selectAuthUserCreds);
+    console.log(votesList);
+    // Checks user vote boolean for a specific post
+    const boolean = checkUpVoteOrNotVote(votesList, id);
+    console.log(boolean);
+    if (boolean) {
       throw Error('Already Voted');
     };
+    const votes = {
+      ...votesList,
+      [id]: true
+    }
 
-    yield call(rsf.firestore.updateDocument, `votes/${uid}`, `votes.${id}`, true);
+    yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
     yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value + 1));
     yield put(voteUpRequestSuccess());
   } catch (error) {
@@ -48,29 +38,21 @@ function* voteUpRequestSaga() {
 function* voteDownRequestSagaAsync({ payload: { id, value } }) {
   try {
     const votesList = yield select(selectVotesVotesList);
-    const { uid } = yield select(selectAuthUserCreds);
+    const { username } = yield select(selectAuthUserCreds);
 
-    // creates an object to firebase
-    if(isEmpty(votesList)) {
-      const obj = {
-        votes: {
-          [id]: false      
-        }
-      };
-      yield call(rsf.firestore.setDocument, `votes/${uid}`, obj);
-      yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value - 1));
-      yield put(voteDownRequestSuccess());
-      return;
-    }
-
-    // if it returns false, user already downvoted
-    const upVoteOrNotVote = checkDownVoteOrNotVote(votesList, id);
-
-    if (!upVoteOrNotVote) {
+    // Checks user vote boolean for a specific post
+    const boolean = checkDownVoteOrNotVote(votesList, id);
+    console.log(boolean);
+    if (boolean) {
       throw Error('Already Voted')
     };
 
-    yield call(rsf.firestore.updateDocument, `votes/${uid}`, `votes.${id}`, false);
+    const votes = {
+      ...votesList,
+      [id]: false
+    }
+
+    yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
     yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value - 1));
     yield put(voteDownRequestSuccess());
   } catch (error) {
@@ -82,31 +64,39 @@ function* voteDownRequestSaga() {
   yield takeLeading(actionTypes.VOTE_DOWN_REQUEST, voteDownRequestSagaAsync)
 }
 
-function* votesCheckRequestSagaAsync() {
-  const userCreds = yield select(selectAuthUserCreds);
+function* votesCheckRequestSagaAsync(userCreds) {
 
+  console.log('ye i ran');
   const channel = yield call(rsf.firestore.channel,
-    firestore.doc(`votes/${userCreds.uid}`));
+    firestore.doc(`votes/${userCreds.username}`));
+
   try {
     while (true) {
       const querySnapshot = yield take(channel);
-      console.log(querySnapshot.exists);
-      if (!querySnapshot.exists) {
-        return yield put(votesCheckRequestSuccess({}))
-      }
-
       const votesList = querySnapshot.data();
       yield put(votesCheckRequestSuccess(votesList));
     }
   } catch (error) {
     yield put(votesCheckRequestFailure(error.message))
+  } finally {
+    if( yield cancelled()) {
+      yield put(votesCheckCancelledRequest());
+    }
   }
 }
 
 function* votesCheckRequestSaga() {
 
   while (yield take(actionTypes.VOTES_CHECK_REQUEST)) {
-    const sync = yield fork(votesCheckRequestSagaAsync);
+    const userCreds = yield select(selectAuthUserCreds);
+
+    if (!userCreds) {
+      return null;
+    }
+
+    const sync = yield fork(votesCheckRequestSagaAsync, userCreds);
+    yield take(actionTypes.VOTES_CHECK_CANCEL_REQUEST);
+    yield cancel(sync);
   }
 }
 

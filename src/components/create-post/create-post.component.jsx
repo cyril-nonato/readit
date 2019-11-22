@@ -4,20 +4,26 @@ import * as S from '../sign-in-sign-up-styles/styles'
 import * as D from './create-post.styles'
 import FormInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component';
-import { Redirect } from 'react-router-dom'
 import FormArea from '../form-area/form-area.component';
-import SelectSubreadit from '../select-subreadit/select-subreadit.component';
+import SelectSubreadit from '../select-sub-readit/select-sub-readit.component';
 
-const CreatePost = ({ onSignInRequest, selectAuthUserCreds }) => {
-
+const CreatePost = ({ 
+  onSignInRequest, 
+  lists, 
+  selectSubReaditSub,
+  onCreatePostRequest 
+}) => {
   const [postData, setPostData] = useState({
     title: '',
     text: '',
     image: '',
+    icon: '',
+    subReadit: '',
   });
 
-  const [active, setActive] = useState('post');
+  // const [selectedSub, setSelectedSub] = useState({selectSubReaditSub});
 
+  const [active, setActive] = useState('post');
 
   const handleChange = e => {
     setPostData({
@@ -26,13 +32,20 @@ const CreatePost = ({ onSignInRequest, selectAuthUserCreds }) => {
     })
   };
 
+  const handleIconAndId = item => {
+    setPostData({
+      ...postData,
+      subReadit: item.id,
+      icon: item.icon
+    })
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
-    onSignInRequest(postData);
+    onCreatePostRequest(postData)
   };
 
   const handleSelectPost = e => {
-    console.log(e.target.id);
     setActive(e.target.id);
   }
 
@@ -52,7 +65,7 @@ const CreatePost = ({ onSignInRequest, selectAuthUserCreds }) => {
       <S.SideImg />
       <S.Form onSubmit={handleSubmit}>
         <D.H3>Create a post</D.H3>
-        <SelectSubreadit />
+        <SelectSubreadit handleIconAndId={handleIconAndId} postData={postData} lists={lists} />
         <D.ButtonContainer active={active} onClick={handleSelectPost}>
           <D.PostContainer id='post'>
             <D.PostIcon id='post' />

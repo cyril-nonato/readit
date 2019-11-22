@@ -28,3 +28,13 @@ export const subReaditRequestFailure = (subReadit, message = 'failure') => ({
   type: actionTypes.SUB_READIT_REQUEST_FAILURE,
   payload: { subReadit, message }
 });
+
+export const subReaditCancelRequest = () => ({
+  type: actionTypes.SUB_READIT_CANCEL_REQUEST
+});
+
+export const subReaditCancelledRequest = (message = 'request cancelled') => ({
+  type: actionTypes.SUB_READIT_CANCELLED_REQUEST,
+  payload: { message }
+});
+

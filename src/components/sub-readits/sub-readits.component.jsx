@@ -10,7 +10,6 @@ const SubReadits = ({ lists }) => {
       <S.CommunitiesContainer>
         <S.H3>Communities</S.H3>
       </S.CommunitiesContainer>
-
       {
         lists.map(list => <SubReadit key={list.id} sub={list} />)
       }
