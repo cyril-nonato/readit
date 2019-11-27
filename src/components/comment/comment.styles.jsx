@@ -23,4 +23,5 @@ export const Time = styled.span`
 export const Comment = styled.p`
   padding: 1rem;
   font-size: 1.4rem;
+  color: ${props => props.theme.text};
 `

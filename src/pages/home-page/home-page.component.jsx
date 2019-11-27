@@ -3,25 +3,24 @@ import React, { useEffect } from 'react'
 import * as S from './home-page.styles'
 import PostsContainer from '../../components/posts/posts.container';
 import SubReaditsContainer from '../../components/sub-readits/sub-readits.container';
+import SubNavigationContainer from '../../components/sub-navigation/sub-navigation.container';
 
 const HomePage = ({
   onSubReaditListsRequest,
   onPostsRequest,
   selectSubReaditLists,
   selectPostsAllPosts,
-  selectAuthUserCreds,
   loadingPosts,
   loadingSubs,
   onPostsCancelRequest,
   onSubReaditCancelRequest,
+  match: { params: { homeParams } },
 }) => {
 
   useEffect(() => {
-    if (!selectPostsAllPosts) {
-      onPostsRequest();
-    }
+    onPostsRequest(homeParams);
 
-  }, [onPostsRequest, selectPostsAllPosts]);
+  }, [onPostsRequest, selectPostsAllPosts, homeParams]);
 
   useEffect(() => {
     if (!selectSubReaditLists) {
@@ -36,12 +35,10 @@ const HomePage = ({
       onSubReaditCancelRequest();
     }
   }, [onPostsCancelRequest, onSubReaditCancelRequest]);
-  console.log(selectAuthUserCreds);
+
   return (
     <S.Container>
-      <S.SubNav>
-        Hello
-      </S.SubNav>
+      <SubNavigationContainer />
       <S.Grid>
         <S.Posts>
           <PostsContainer posts={selectPostsAllPosts} loading={loadingPosts} />
@@ -50,7 +47,6 @@ const HomePage = ({
           <SubReaditsContainer lists={selectSubReaditLists} loading={loadingSubs} />
         </S.Subs>
       </S.Grid>
-
     </S.Container>
   );
 }

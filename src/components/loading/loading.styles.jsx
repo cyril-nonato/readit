@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '../../utils/theme';
 
 export const LoadingContainer = styled.div`
   position: absolute;
@@ -18,10 +17,10 @@ export const Loading = styled.div`
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
-  border-top: 1.1em solid rgba(${theme.colors.blackRGB}, .1);
-  border-right: 1.1em solid rgba(${theme.colors.blackRGB}, .1);
-  border-bottom: 1.1em solid rgba(${theme.colors.blackRGB}, .1);
-  border-left: 1.1em solid ${theme.colors.black};
+  border-top: 1.1em solid ${props => props.theme.secondary};
+  border-right: 1.1em solid ${props => props.theme.secondary};
+  border-bottom: 1.1em solid ${props => props.theme.secondary};
+  border-left: 1.1em solid ${props => props.theme.primary};
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);

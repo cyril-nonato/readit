@@ -64,6 +64,8 @@ export const Input = styled.input`
   width: inherit;
   font-family: inherit;
   border-radius: 5px;
+  color: ${props => props.theme.text};
+  background-color: transparent;
 
   ~ ${Label} {
     ${labelPos}

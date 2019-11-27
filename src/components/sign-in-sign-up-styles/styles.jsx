@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import Side from '../../assets/side.jpg'
 
 export const Container = styled.section`
   display: grid;
@@ -23,9 +22,9 @@ export const Container = styled.section`
 export const SideImg = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(${Side});
+  background-image: url(https://backgrounddownload.com/wp-content/uploads/2018/09/star-wars-background-reddit-1.jpg);
   background-size: cover;
-  background-position: right;
+  background-position: ${props => props.theme.formBackground};
   display: none;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
@@ -48,26 +47,28 @@ export const Form = styled.form`
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
     input,
     textarea {
-      width: 70%;
+      width: 40%;
     }
   }
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     input,
     textarea {
-      width: 40%;
+      width: 25%;
     }
   }
 `;
 
 export const H3 = styled.h3`
   font-size: 1.6rem;
+  color: ${props => props.theme.text};
 `;
 
 export const Span = styled.span`
   font-size: 1.1rem;
   margin-top: 2rem;
   display: block;
+  color: ${props => props.theme.text};
 `;
 
 export const Anchor = styled(Link)`

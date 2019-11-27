@@ -4,7 +4,7 @@ import * as S from './sub-readits.styles'
 import SubReadit from '../sub-readit/sub-readit.component';
 
 const SubReadits = ({ lists }) => {
-  console.log('sub');
+
   return (
     <S.Container>
       <S.CommunitiesContainer>

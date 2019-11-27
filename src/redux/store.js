@@ -17,7 +17,7 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'subNavigation', 'theme'],
   transforms: [subsetFilter]
 }
 

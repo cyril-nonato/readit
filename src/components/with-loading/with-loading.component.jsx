@@ -1,9 +1,10 @@
 import React from 'react';
+import Loading from '../loading/loading.component';
 
 const WithLoading = WrappedComponent => ({loading, ...otherProps}) => {
-  console.log(loading);
+
   if(loading) {
-    return null;
+    return <Loading />;
   }
 
   return ( 

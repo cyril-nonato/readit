@@ -2,12 +2,39 @@ import styled, { css } from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
+export const ItemLink = styled.li`
+  padding: .5rem 1rem .25rem 1rem;
+  border-radius: 5px;
+  background-color: ${props => props.theme.primary};
+  max-height: 42rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  grid-auto-rows: auto;
+  grid-gap: .75rem;
+  grid-template-areas: 
+    "info info"
+    "content content"
+    "votes comments";
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    grid-template-columns: 1.5fr 25fr;
+    grid-template-areas: 
+      "votes info"
+      "votes content"
+      "votes comments";
+  }
+
+  &:hover {
+    border: 1px solid ${props => props.theme.tertiary};
+  }
+`;
 
 export const Item = styled.li`
   padding: .5rem 1rem .25rem 1rem;
   border-radius: 5px;
   background-color: ${props => props.theme.primary};
-  max-height: 42rem;
+  max-height: auto;
   width: 100%;
 
   display: grid;
@@ -28,9 +55,20 @@ export const Item = styled.li`
   }
 `;
 
-export const SubReaditName = styled.span`
+
+export const Cover = styled.div`
+  height: 32rem;
+  width: 100%;
+  background: linear-gradient(to bottom, transparent 0%, transparent 80%, ${props => props.theme.primary} 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+export const SubReaditName = styled(Link)`
   padding-right: .5rem;
   font-weight: bold;
+  color: ${props => props.theme.text};
 `;
 
 export const Owner = styled.span`
@@ -58,30 +96,23 @@ export const Text = styled.p`
   font-size: 1.4rem;
 `;
 
-export const Cover = styled.div`
-  height: 32rem;
-  width: 100%;
-  background: linear-gradient(to bottom, transparent 0%, transparent 80%, white 100%);
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
 const ContentContainerStyles = css`
   position: relative;
   grid-area: content;
-
   min-height: auto;
-  max-height: 32rem;
-  overflow: hidden;
+  color: ${props => props.theme.text};
 `;
 
 export const ContentContainerLink = styled(Link)`
   ${ContentContainerStyles};
+  max-height: 32rem;
+  overflow: hidden;
+  
 `;
 
 export const ContentContainer = styled.div`
   ${ContentContainerStyles};
+  max-height: auto;
 `;
 
 
@@ -95,11 +126,11 @@ export const CommentsIcon = styled.div`
 export const CommentsText = styled.span`
   color: ${props => props.theme.tertiary};
   font-size: 1.2rem;
-  margin-left: 1rem;
+  margin-left: .5rem;
   font-weight: bold;
 `;
 
-export const BackgroundContainer = styled.div`
+export const CommentsHover = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,7 +145,7 @@ const CommentsContainerStyles = css`
   width: 120px;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
-    width: 150px;
+    width: 130px;
   };
 
 
@@ -123,7 +154,7 @@ const CommentsContainerStyles = css`
     cursor: pointer;
   }
 
-  &:hover ${BackgroundContainer} {
+  &:hover ${CommentsHover} {
     background-color: ${props => props.theme.quarternary};
   }
 `;
@@ -133,5 +164,21 @@ export const CommentsContainerLink = styled(Link)`
 `;
 
 export const CommentsContainer = styled.div`
-  ${CommentsContainerLink};
+  ${CommentsContainerStyles};
+`;
+
+export const BackgroundImage = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+`;
+
+export const VotesContainer = styled.div`
+  grid-area: votes;
+  display: flex;
+  align-items: center;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    flex-direction: column;
+  };
 `;

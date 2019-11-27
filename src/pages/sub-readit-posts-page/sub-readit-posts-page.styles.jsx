@@ -32,6 +32,7 @@ export const H3 = styled.h3`
   align-items: center;
   font-size: 2rem;
   height: 5rem;
+  color: ${props => props.theme.quinary};
 `;
 
 

@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { Form } from '../sign-in-sign-up-styles/styles'
+
 export const mediaWidthSize = css`
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
     width: 70%;
@@ -7,6 +9,44 @@ export const mediaWidthSize = css`
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     width: 40%;
+  }
+`;
+
+export const Container = styled.section`
+  display: grid;
+  width: 100vw;
+  grid-template-columns: 100%;
+  grid-auto-rows: 100vh;
+  background: ${props => props.theme.primary};
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    grid-template-columns: 1.25fr 8fr;
+  }
+
+  ${Form} {
+      input,
+      textarea {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+      input,
+      textarea {
+        width: 70%;
+      }
+    }
+
+    @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+      input,
+      textarea {
+        width: 40%;
+      }
+    }
   }
 `;
 
@@ -141,7 +181,7 @@ export const Text = styled.span`
   
 `;
 
-export const LinkPostContainerStyles = css`
+const LinkPostContainerStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;

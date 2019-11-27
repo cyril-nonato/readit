@@ -3,17 +3,33 @@ import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './posts.types'
 import { docsToMap } from '../utils';
 import { postsRequestSuccess, postsRequestFailure, postFilterBySubReaditRequestSuccess, postFilterBySubReaditRequestFailure, postsCancelledRequest } from './posts.actions';
+import { addCommentsLengthProps } from './posts.utils';
 
 function* postsRequestSagaAsync(parameter) {
-  const channel = yield call(rsf.firestore.channel,
-    firestore.collection('posts').orderBy('created_at', 'desc'));
+  console.log(parameter);
+  let channel;
+  switch (parameter) {
+    case 'popular':
+    case undefined:
+      channel = yield call(rsf.firestore.channel,
+        firestore.collection('posts').orderBy('votes', 'desc'));
+      break;
+    case 'all':
+      channel = yield call(rsf.firestore.channel,
+        firestore.collection('posts').orderBy('created_at', 'desc'));
+      break;
+    default: throw Error('Not found');
+  }
 
   try {
     while (true) {
       const querySnapshot = yield take(channel);
       const docs = querySnapshot.docs;
-      const allPosts = docsToMap(docs);
-      yield put(postsRequestSuccess(allPosts, 'Fetched success'));
+      const posts = docsToMap(docs);
+      
+      const updatedPosts = addCommentsLengthProps(posts)
+
+      yield put(postsRequestSuccess(updatedPosts, 'Fetched success'));
     }
   } catch (error) {
     yield put(postsRequestFailure(error.message));
@@ -58,7 +74,7 @@ function* postFilterBySubReaditRequestSagaAsync(subReadit) {
 }
 
 function* postFilterBySubReaditRequestSaga() {
-  while(true) {
+  while (true) {
     const { payload: { subReadit } } = yield take(actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST);
     const sync = yield fork(postFilterBySubReaditRequestSagaAsync, subReadit);
     yield take(actionTypes.POSTS_CANCEL_REQUEST);

@@ -30,6 +30,36 @@ export const readPostRequestFailure = (message = 'success') => ({
   payload: { message }
 });
 
+export const updatePostRequest = (post, id) => ({
+  type: actionTypes.UPDATE_POST_REQUEST,
+  payload: { post, id }
+});
+
+export const updatePostRequestSuccess = (message = 'success') => ({
+  type: actionTypes.UPDATE_POST_REQUEST_SUCCESS,
+  payload: { message }
+});
+
+export const updatePostRequestFailure = (message = 'failure') => ({
+  type: actionTypes.UPDATE_POST_REQUEST_FAILURE,
+  payload: { message }
+});
+
+export const deletePostRequest = (id) => ({
+  type: actionTypes.DELETE_POST_REQUEST,
+  payload: { id }
+});
+
+export const deletePostRequestSuccess = (message = 'success') => ({
+  type: actionTypes.DELETE_POST_REQUEST_SUCCESS,
+  payload: { message }
+});
+
+export const deletePostRequestFailure = (message = 'failure') => ({
+  type: actionTypes.DELETE_POST_REQUEST_FAILURE,
+  payload: { message }
+});
+
 export const crudCancelRequest = () => ({
   type: actionTypes.CRUD_CANCEL_REQUEST
 });

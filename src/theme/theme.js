@@ -12,13 +12,15 @@ const mediaQueries = {
   }
 }
 
-const theme1 = {
+export const theme1 = {
   primary: white,
   secondary: blue,
   tertiary: grey,
   quarternary: lightBlack,
   quinary: black,
   backgroundColor: '#DAE0E6',
+  text: black,
+  formBackground: 'right',
   vote: {
     up: orange,
     down: blue
@@ -32,51 +34,36 @@ const theme1 = {
     label: grey,
     after: '#24a0ed'
   },
-  ...mediaQueries
+  mediaQueries: {
+    tablet: '500px',
+    windows: '1000px'
+  }
 }
 
-// const theme2 = {
-//   primary: '#0079d3',
-//   secondary: white,
-//   signInOut: white,
-//   input: {
-//     border: lightBlack,
-//     label: '#a5a4a4',
-//     after: '#24a0ed'
-//   },
-//   mediaQueries: {
-//     tablet: '500px',
-//     windows: '1000px'
-//   },
-//   button: {
-//     background: 'rgba(0, 121, 211)',
-//     backgroundHover: 'rgba(0, 121, 211, .8)',
-//     text: white,
-//     customStyleBackground: white
-//   },
-//   backgroundColor: '#DAE0E6',
-//   navigation: {
-//     background: '#f9f9f9',
-//     backgroundLink: lightBlack,
-//     iconsColor: black,
-//     userOptions: {
-//       buttonBackgroundColor: 'transparent',
-//       triangleBackgroundColor: grey,
-//     },
-//     dropdown: {
-//       icon: grey,
-//       text: 'black',
-//       textHover: white,
-//       iconHover: white,
-//       arrow: white,
-//       arrowHover: grey,
-//     },
-//   },
-//   posts: {
-//     subNav: {
-//       border: lightBlack
-//     }
-//   },
-// };
+const darkGrey = '#1a1a1b';
+const silver = '#d7dadc';
 
-export { theme1 }
+export const theme2 = {
+  primary: darkGrey,
+  secondary: silver,
+  tertiary: grey,
+  quarternary: lightBlack,
+  quinary: silver,
+  backgroundColor: black,
+  text: silver,
+  formBackground: 'left',
+  vote: {
+    up: orange,
+    down: blue
+  },
+  button: {
+    background: silver,
+    backgroundHover: 'rgba(215, 218, 220, .8)',
+  },
+  input: {
+    border: silver,
+    label: grey,
+    after: silver
+  },
+  ...mediaQueries
+}

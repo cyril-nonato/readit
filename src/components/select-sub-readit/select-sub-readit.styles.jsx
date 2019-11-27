@@ -11,6 +11,7 @@ export const Icon = styled.div`
 export const Name = styled.span`
   padding-left: 1rem;
   font-size: 1.4rem;
+  color: ${props => props.theme.text};
 `;
 
 export const Input = styled.div`
@@ -23,13 +24,18 @@ export const Input = styled.div`
   border-bottom-right-radius: 5px;
   height: 3.5rem;
   margin-bottom: 2rem;
+  padding: .5rem;
+  
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-export const ArrowDownIcon = styled.div`
+export const Triangle = styled.div`
   width: 20px;
   height: 10px;
   clip-path: polygon(0 0, 47% 100%, 100% 0);
-  background-color: ${props => props.theme.quarternary};
+  background-color: ${props => props.theme.tertiary};
   position: absolute;
   z-index: 5;
   top: 50%;
@@ -52,10 +58,6 @@ export const Select = styled.div`
 
   ${Input} {
     width: 100%;
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 
   &:hover ${Input},
@@ -86,6 +88,10 @@ export const Lists = styled.ul`
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     width: 40%;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 

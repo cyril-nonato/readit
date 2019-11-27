@@ -1,5 +1,28 @@
 import styled, { css } from 'styled-components'
 
+const upVote = css`
+  background-color: ${props => props.theme.vote.up};
+`;
+
+const downVote = css`
+  background-color: ${props => props.theme.vote.down};
+`;
+
+const checkForUp = props => {
+  if(props.checkTypeVote === true) {
+    return upVote
+  }
+  return null;
+}
+
+const checkForDown = props => {
+  if(props.checkTypeVote === false) {
+    return downVote
+  }
+  return null;
+}
+
+
 const arrowStyles = css`
   height: 100%;
   width: 100%;
@@ -13,6 +36,8 @@ export const Up = styled.div`
   &:hover {
     background-color: ${props => props.theme.vote.up};
   }
+
+  ${checkForUp};
 `;
 
 export const Down = styled.div`
@@ -22,6 +47,8 @@ export const Down = styled.div`
   &:hover {
     background-color: ${props => props.theme.vote.down};
   }
+
+  ${checkForDown};
 `;
 
 export const ArrowContainer = styled.div`
@@ -45,30 +72,18 @@ export const ArrowContainer = styled.div`
     height: 20px;
     width: 20px;
   }
+
 `;
 
 export const VoteValue = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
   padding: 0 .5rem;
+  color: ${props => props.theme.text};
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
     padding: 0;
     font-size: 1.4rem;
   }
 
-`;
-
-export const VotesContainer = styled.div`
-  grid-area: votes;
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 1rem;
-  }
 `;

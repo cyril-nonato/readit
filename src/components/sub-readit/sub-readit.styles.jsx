@@ -6,7 +6,7 @@ export const Anchor = styled(Link)`
   display: flex;
   align-items: center;
   padding: 1rem;
-
+  color: ${props => props.theme.text};
   &:hover {
     cursor: pointer;
   }

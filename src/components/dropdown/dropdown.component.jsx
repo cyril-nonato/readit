@@ -1,9 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import * as S from './dropdown.styles'
 import Backdrop from '../backdrop/backdrop.component'
 
-const Dropdown = ({ onClick, selectAuthUserCreds }) => {
+const Dropdown = ({ onClick, selectAuthUserCreds, handleTheme }) => {
+  const [type, setType] = useState(true);
+
+  const handleClick = () => {
+    setType(!type);
+    handleTheme(type);
+  }
   return (
     <React.Fragment>
       <Backdrop onClick={onClick} />
@@ -12,7 +18,7 @@ const Dropdown = ({ onClick, selectAuthUserCreds }) => {
           view options
       </S.OptionText>
         <S.List>
-          <S.Item>
+          <S.Item onClick={handleClick}>
             <S.Button>
               <S.MoonLogo />
               <S.Text>Night Mode</S.Text>

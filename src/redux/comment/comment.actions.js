@@ -1,7 +1,8 @@
 import actionTypes from "./comment.types";
 
-export const addCommentRequest = () => ({
-  type: actionTypes.ADD_COMMENT_REQUEST
+export const addCommentRequest = (comment) => ({
+  type: actionTypes.ADD_COMMENT_REQUEST,
+  payload: { comment }
 });
 
 export const addCommentRequestSuccess = (message = 'success') => ({

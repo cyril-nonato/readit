@@ -2,14 +2,26 @@ import { call, all, put, takeLeading, select, take, fork, cancel, cancelled } fr
 import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './comment.types'
 import { selectAuthUserCreds } from '../auth/auth.selector'
+import { selectCrudPostPost } from '../crud-post/crud-post.selector';
+import { addCommentRequestSuccess, addCommentRequestFailure } from './comment.actions';
+import { updateComment, arrayToObj } from './comments.utils';
 
-function* addCommentRequestSagaAsync({payload: {comment}}) {
-  const {username} = yield select(selectAuthUserCreds);
-  const {comments} = yield select(selectCrudPostPost)
+function* addCommentRequestSagaAsync({ payload: { comment } }) {
+  const { username } = yield select(selectAuthUserCreds);
+  const {comments, id} = yield select(selectCrudPostPost);
+  const commentToAdd = {
+    commented_by: username,
+    created_at: firebase.firestore.FieldValue.serverTimestamp(),
+    comment
+  };
+
+  const updatedComments = updateComment(comments, commentToAdd);
+  const newObjComment = arrayToObj(updatedComments);
   try {
-
+    yield call(rsf.firestore.updateDocument, `posts/${id}`, 'comments', newObjComment);
+    yield put(addCommentRequestSuccess());
   } catch (error) {
-    
+    yield put(addCommentRequestFailure());
   }
 }
 

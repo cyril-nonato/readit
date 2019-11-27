@@ -53,6 +53,54 @@ const crudPostReducer = (state = INITIAL_STATE, action) => {
         failure: action.payload.message,
         popUp: true,
       }
+    case actionTypes.UPDATE_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case actionTypes.UPDATE_POST_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.message,
+        failure: null,
+        popUp: true,
+      }
+    case actionTypes.UPDATE_POST_REQUEST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: null,
+        failure: action.payload.message,
+        popUp: true,
+      }
+    case actionTypes.DELETE_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case actionTypes.DELETE_POST_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.message,
+        failure: null,
+        popUp: true,
+      }
+    case actionTypes.DELETE_POST_REQUEST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: null,
+        failure: action.payload.message,
+        popUp: true,
+      }
+    case actionTypes.CRUD_CANCELLED_REQUEST:
+      return {
+        ...state,
+        post: null,
+        popUp: false
+      }
     default: return state;
   }
 };

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import PostsContainer from '../../components/posts/posts.container';
 import * as S from './sub-readit-posts-page.styles'
 import SubReaditDetailsContainer from '../../components/sub-readit-details/sub-readit-details.container';
+import SubNavigationContainer from '../../components/sub-navigation/sub-navigation.container';
 
 const SubReaditPostsPage = ({
   onPostFilterBySubReaditRequest,
@@ -31,6 +32,7 @@ const SubReaditPostsPage = ({
 
   return (
     <S.Container>
+    <SubNavigationContainer />
       <S.Grid>
         <SubReaditDetailsContainer sub={selectSubReaditSub} loading={loadingSubs} />
         <S.Posts>

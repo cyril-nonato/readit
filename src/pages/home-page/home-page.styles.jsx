@@ -37,7 +37,7 @@ export const Grid = styled.div`
   margin: 0 .5rem;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
-    grid-gap: 2rem;
+    gap: 2rem;
   }
 
 `;
@@ -45,6 +45,10 @@ export const Grid = styled.div`
 export const Container = styled.div`
 
   ${Grid} {
-    margin: 5rem;
+    margin: 2rem 1rem;
+
+    @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+      margin: 5rem;
+    }
   }
 `;

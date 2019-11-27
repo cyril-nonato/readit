@@ -4,6 +4,7 @@ import { postsSaga } from './posts/posts.saga'
 import { votesSaga } from './votes/votes.saga'
 import { subReaditSaga } from './sub-readit/sub-readit.saga'
 import { crudPostSaga } from './crud-post/crud-post.saga'
+import { commentSaga } from './comment/comment.saga'
 
 export default function* rootSaga() {
   yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     call(postsSaga),
     call(votesSaga),
     call(subReaditSaga),
-    call(crudPostSaga)
+    call(crudPostSaga),
+    call(commentSaga)
   ])
 }

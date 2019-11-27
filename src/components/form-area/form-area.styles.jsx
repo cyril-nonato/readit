@@ -65,7 +65,9 @@ export const Input = styled.textarea`
   font-family: inherit;
   border-radius: 5px;
   width: 100%;
-
+  color: ${props => props.theme.text};
+  background-color: transparent;
+  
   ~ ${Label} {
     ${labelPos}
 

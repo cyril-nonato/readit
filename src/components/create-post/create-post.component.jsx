@@ -46,7 +46,7 @@ const CreatePost = ({
   };
 
   const handleSelectPost = e => {
-    setActive(e.target.id);
+    setActive(e.target.getAttribute('data-id'));
   }
 
   let formType;
@@ -56,28 +56,30 @@ const CreatePost = ({
     )
   } else if (active === 'link') {
     formType = (
-      <FormInput value={postData.title} onChange={handleChange} name='link' label='link (include image type)' type='input' />
+      <FormInput value={postData.image} onChange={handleChange} name='image' label='link (include image type)' type='input' />
     )
   }
 
   return (
-    <S.Container>
+    <D.Container>
       <S.SideImg />
       <S.Form onSubmit={handleSubmit}>
         <D.H3>Create a post</D.H3>
         <SelectSubreadit handleIconAndId={handleIconAndId} postData={postData} lists={lists} />
         <D.ButtonContainer active={active} onClick={handleSelectPost}>
-          <D.PostContainer id='post'>
-            <D.PostIcon id='post' />
-            <D.Text id='post'>Post</D.Text>
+          
+          <D.PostContainer data-id='post'>
+            <D.PostIcon data-id='post' />
+            <D.Text data-id='post'>Post</D.Text>
           </D.PostContainer>
-          <D.LinkContainer id='link'>
-            <D.LinkIconContainer id='link'>
-              <D.LinkIconBottom id='link' />
-              <D.LinkIconTop id='link' />
-            </D.LinkIconContainer>
 
-            <D.Text id='link'>Link</D.Text>
+          <D.LinkContainer data-id='link'>
+            <D.LinkIconContainer data-id='link'>
+              <D.LinkIconBottom data-id='link' />
+              <D.LinkIconTop data-id='link' />
+            </D.LinkIconContainer>
+            <D.Text data-id='link'>Link</D.Text>
+
           </D.LinkContainer>
         </D.ButtonContainer>
         <FormInput value={postData.title} onChange={handleChange} name='title' label='title' type='input' />
@@ -85,8 +87,7 @@ const CreatePost = ({
         <CustomButton type='submit'>Submit</CustomButton>
         <S.Span>Go to Homepage? <S.Anchor to='/'>Home</S.Anchor></S.Span>
       </S.Form>
-
-    </S.Container>
+    </D.Container>
   );
 }
 

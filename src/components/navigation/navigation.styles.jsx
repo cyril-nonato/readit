@@ -3,7 +3,12 @@ import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const gridMain = css`
-  grid-template-columns: 1.15fr 6fr .25fr .25fr .25fr .25fr;
+  grid-template-columns: 1.15fr 2fr .5fr .5fr .5fr;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    grid-template-columns: 1.15fr 6fr .25fr .25fr .25fr .25fr;
+  }
+  
 `;
 
 const checkSelectAuthUserCreds = props => {
@@ -15,7 +20,7 @@ const checkSelectAuthUserCreds = props => {
 
 export const Navigation = styled.div`
   display: grid;
-  grid-template-columns: 1.15fr 2fr .5fr .5fr .5fr 1fr;
+  grid-template-columns: 1.15fr 2fr .5fr .5fr .5fr .25fr;
   grid-template-rows: 50px;
   grid-gap: 1rem;
   position: fixed;
@@ -29,8 +34,9 @@ export const Navigation = styled.div`
     padding: 0 5rem;
     grid-template-columns: 1.15fr 5fr .25fr .25fr 1fr 1fr .5fr;
 
-    ${checkSelectAuthUserCreds};
   }
+
+  ${checkSelectAuthUserCreds};
 `;
 
 const SignUpAndLoginStyles = css`
@@ -70,13 +76,13 @@ export const SignUpContainer = styled.div`
 
 export const BrandLogo = styled.img`
   height: 30px;
-
 `;
 
 export const BrandText = styled.h2`
   font-size: 1.6rem;
   letter-spacing: 1px;
   display: none;
+  color: ${props => props.theme.text};
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     display: block;
@@ -91,18 +97,14 @@ export const BrandContainer = styled.div`
   justify-content: center;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 `;
 
 export const UserOptions = styled.div`
-
   align-self: center;
   justify-self: center;
 
-  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
-
-  }
 `;
 
 export const Button = styled.button`

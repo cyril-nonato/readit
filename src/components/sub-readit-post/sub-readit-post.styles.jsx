@@ -6,6 +6,7 @@ export const Container = styled.div`
   margin: 8rem 0 3rem 0;
   display: grid;
   grid-template-columns: 1fr;
+  position: relative;
   grid-template-areas:
     "bg"
     "post";
@@ -17,7 +18,6 @@ export const Container = styled.div`
     "post subReadit";
     gap: 1rem;
   }
-
 
 `;
 
@@ -44,6 +44,7 @@ export const Comments = styled.ul`
 
 export const PostContainer = styled.div`
   grid-area: post;
+  position: relative;
   width: 95%;
   margin: 2rem auto;
   background-color: ${props => props.theme.primary};
@@ -151,4 +152,27 @@ export const BgDetails = styled.div`
     border: 2px solid ${props => props.theme.primary};
     margin-right: 2rem;
   }
+`;
+
+export const DeleteButton = styled.button`
+  background-color: transparent;
+  border: none;
+  padding: .75rem;
+  position: absolute;
+  z-index: 5;
+  top:0;
+  right: 0;
+  color: ${props => props.theme.tertiary};
+  font-size: 1.6rem;
+
+  &:hover {
+    cursor: pointer;
+    color: ${props => props.theme.secondary};
+  }
+`;
+
+export const Back = styled.div`
+  width: 100%;
+  height: 100%;
+  
 `;

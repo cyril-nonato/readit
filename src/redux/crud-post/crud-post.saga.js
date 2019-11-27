@@ -2,8 +2,8 @@ import { call, all, put, takeLeading, select, take, fork, cancel, cancelled } fr
 import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './crud-post.types'
 import { selectAuthUserCreds } from '../auth/auth.selector'
-import { createPostRequestFailure, createPostRequestSuccess, crudCancelledRequest, readPostRequestFailure, readPostRequestSuccess } from './crud-post.actions';
-import { checkIfLinkOrPost } from './crud-post.utils';
+import { createPostRequestFailure, createPostRequestSuccess, crudCancelledRequest, readPostRequestFailure, readPostRequestSuccess, deletePostRequestSuccess, deletePostRequestFailure } from './crud-post.actions';
+import { checkIfLinkOrPost, convertPostCommentsToArray } from './crud-post.utils';
 
 function* createPostSagaAsync({ payload: { post } }) {
   try {
@@ -14,6 +14,7 @@ function* createPostSagaAsync({ payload: { post } }) {
       ...checkPost,
       created_by: userCreds.username,
       uid: userCreds.uid,
+      edited: false,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
       votes: 0
     }
@@ -35,24 +36,25 @@ function* readPostSagaAsync(subReadit, id) {
   const channel = yield call(rsf.firestore.channel, firestore.doc(`posts/${id}`));
 
   try {
-    const querySnapshot = yield take(channel);
-    
-    // Checks firestore for any document with the said id
-    if(!querySnapshot.exists) {
-      throw Error('Not found')
-    }
-    const post = querySnapshot.data();
+    while (true) {
+      const querySnapshot = yield take(channel);
 
-    const updatedPost = {
-      ...post,
-      commentsLength: post.comments.length
-    }
+      // Checks firestore for any document with the said id
+      if (!querySnapshot.exists) {
+        throw Error('Not found')
+      }
+      const post = querySnapshot.data();
 
-    yield put(readPostRequestSuccess(updatedPost))
+      if (post.subReadit !== subReadit) {
+        throw Error('Not found')
+      }
+      const updatedPost = convertPostCommentsToArray(post, id);
+      yield put(readPostRequestSuccess(updatedPost))
+    }
   } catch (error) {
     yield put(readPostRequestFailure(error.message))
   } finally {
-    if(yield cancelled()) {
+    if (yield cancelled()) {
       yield put(crudCancelledRequest())
     }
   }
@@ -60,16 +62,39 @@ function* readPostSagaAsync(subReadit, id) {
 
 function* readPostSaga() {
   while (true) {
-    const {payload: {subReadit, id}} = yield take(actionTypes.READ_POST_REQUEST);
+    const { payload: { subReadit, id } } = yield take(actionTypes.READ_POST_REQUEST);
     const sync = yield fork(readPostSagaAsync, subReadit, id);
     yield take(actionTypes.CRUD_CANCEL_REQUEST);
     yield cancel(sync);
   }
 }
 
+function* updatePostSagaAsync({ payload: { post, id } }) {
+  yield console.log(post, id);
+}
+
+function* updatePostSaga() {
+  yield takeLeading(actionTypes.UPDATE_POST_REQUEST, updatePostSagaAsync);
+}
+
+function* deletePostSagaAsync({ payload: { id } }) {
+  try {
+    yield call(rsf.firestore.deleteDocument, `posts/${id}`);
+    yield put(deletePostRequestSuccess());
+  } catch (error) {
+    yield put(deletePostRequestFailure());
+  }
+}
+
+function* deletePostSaga() {
+  yield takeLeading(actionTypes.DELETE_POST_REQUEST, deletePostSagaAsync)
+}
+
 export function* crudPostSaga() {
   yield all([
     call(createPostSaga),
-    call(readPostSaga)
+    call(readPostSaga),
+    call(deletePostSaga),
+    call(updatePostSaga)
   ])
 }

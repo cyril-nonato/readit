@@ -5,6 +5,7 @@ const SubReaditPostPage = ({
   match: {params: {subReadit, id}}, 
   onReadPostRequest, 
   onSubReaditRequest,
+  onCrudCancelRequest
 }) => {
 
   useEffect(() => {
@@ -14,6 +15,12 @@ const SubReaditPostPage = ({
   useEffect(() => {
     onSubReaditRequest(subReadit);
   }, [onSubReaditRequest, subReadit]);
+
+  useEffect(() => {
+    return () => {
+      onCrudCancelRequest()
+    }
+  }, [onCrudCancelRequest])
 
   return (
     <SubReaditPostContainer />

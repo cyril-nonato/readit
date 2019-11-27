@@ -4,7 +4,7 @@ import * as S from './navigation.styles'
 import Dropdown from '../dropdown/dropdown.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-const Navigation = ({ selectAuthUserCreds }) => {
+const Navigation = ({ selectAuthUserCreds, handleTheme }) => {
 
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
@@ -32,10 +32,10 @@ const Navigation = ({ selectAuthUserCreds }) => {
     <S.Navigation selectAuthUserCreds={selectAuthUserCreds}>
       <S.BrandContainer>
         <S.BrandLogo src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Reddit_logo_orange.svg/240px-Reddit_logo_orange.svg.png' />
-        <S.BrandText>redditzilla</S.BrandText>
+        <S.BrandText>Readit</S.BrandText>
       </S.BrandContainer>
       <div>&nbsp;</div>
-      <S.PopularContainer to='/'>
+      <S.PopularContainer to='/popular'>
         <S.PopularIcon />
         <S.Text>Popular</S.Text>
       </S.PopularContainer>
@@ -56,7 +56,7 @@ const Navigation = ({ selectAuthUserCreds }) => {
       </S.UserOptions>
       {
         toggleDropdown &&
-        <Dropdown selectAuthUserCreds={selectAuthUserCreds} onClick={handleClick} />
+        <Dropdown handleTheme={handleTheme} selectAuthUserCreds={selectAuthUserCreds} onClick={handleClick} />
       }
     </S.Navigation>
   );

@@ -36,7 +36,7 @@ export const BgDetails = styled.div`
   align-items: center;
 
   ${Name} {
-    color: ${props => props.theme.primary};
+    color: ${props => props.theme.text};
     font-size: 2rem;
   }
 
@@ -54,6 +54,7 @@ export const Content = styled.div`
   border-radius: 5px;
   display: none;
   grid-area: subReaditContent;
+  color: ${props => props.theme.text};
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     display: block;

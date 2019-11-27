@@ -14,7 +14,7 @@ const postsReducer = (state = INITIAL_STATE, action) => {
     case actionTypes.POSTS_REQUEST:
       return {
         ...state,
-        loading: true
+        loading: true,
       }
     case actionTypes.POSTS_REQUEST_SUCCESS:
       return {

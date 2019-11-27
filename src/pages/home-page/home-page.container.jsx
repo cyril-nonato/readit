@@ -6,8 +6,6 @@ import { createStructuredSelector } from 'reselect';
 import { selectPostsAllPosts, selectPostsAllPostsIsLoading } from '../../redux/posts/posts.select';
 import { subReaditListsRequest, subReaditCancelRequest } from '../../redux/sub-readit/sub-readit.actions';
 import { selectSubReaditLists, selectSubReaditListsIsLoading } from '../../redux/sub-readit/sub-readit.selector';
-import { votesCheckRequest } from '../../redux/votes/votes.actions';
-import { selectAuthUserCreds } from '../../redux/auth/auth.selector';
 
 const mapStateToProps = createStructuredSelector({
   selectPostsAllPosts,
