@@ -10,6 +10,7 @@ const Dropdown = ({ onClick, selectAuthUserCreds, handleTheme }) => {
     setType(!type);
     handleTheme(type);
   }
+  
   return (
     <React.Fragment>
       <Backdrop onClick={onClick} />
@@ -27,7 +28,7 @@ const Dropdown = ({ onClick, selectAuthUserCreds, handleTheme }) => {
           {
             !selectAuthUserCreds &&
             <S.Item>
-              <S.Anchor to='/login'>
+              <S.Anchor onClick={onClick} to='/login'>
                 <S.SignInSignUpContainer>
                   <S.Box />
                   <S.ArrowIn />

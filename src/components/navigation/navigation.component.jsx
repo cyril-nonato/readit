@@ -12,6 +12,7 @@ const Navigation = ({ selectAuthUserCreds, handleTheme }) => {
     setToggleDropdown(!toggleDropdown);
   };
 
+  // Show specific links based on auth user creds
   const checkForAuth = !selectAuthUserCreds ? (
     <React.Fragment>
       <S.LoginContainer>
@@ -22,10 +23,18 @@ const Navigation = ({ selectAuthUserCreds, handleTheme }) => {
       </S.SignUpContainer>
     </React.Fragment>
   ) : (
-      <S.CreatePostContainer to='/create-post'>
-        <S.CreatePostIcon />
-        <S.Text>Create</S.Text>
-      </S.CreatePostContainer>
+      <React.Fragment>
+        <S.CreatePostContainer to='/create-post'>
+          <S.CreatePostIcon />
+          <S.Text>Create</S.Text>
+        </S.CreatePostContainer>
+        <S.CurrentUserContainer>
+          <S.CurrentUser>
+            {selectAuthUserCreds.username.slice(0, 1)}
+          </S.CurrentUser>
+          <S.Text>{selectAuthUserCreds.username}</S.Text>
+        </S.CurrentUserContainer>
+      </React.Fragment>
     );
 
   return (
@@ -35,11 +44,7 @@ const Navigation = ({ selectAuthUserCreds, handleTheme }) => {
         <S.BrandText>Readit</S.BrandText>
       </S.BrandContainer>
       <div>&nbsp;</div>
-      <S.PopularContainer to='/popular'>
-        <S.PopularIcon />
-        <S.Text>Popular</S.Text>
-      </S.PopularContainer>
-      <S.AllContainer to='/all'>
+      <S.AllContainer to='/'>
         <S.AllBoxIconSmaller />
         <S.AllArrowIcon />
         <S.AllBoxIconBigger />

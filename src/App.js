@@ -15,29 +15,30 @@ import { votesCheckRequest } from './redux/votes/votes.actions'
 import { selectThemeStyle } from './redux/theme/theme.selector'
 import { changeCurrentTheme } from './redux/theme/theme.actions'
 import UpdatePostPageContainer from './pages/update-post-page/update-post-page.container'
+import NotFoundPage from './pages/not-found-page/not-found-page.component'
 
 function App() {
+  
   const theme = useSelector(selectThemeStyle);
   const dispatch = useDispatch();
+
+  // Initialize live votes changes on users vote
   useEffect(() => {
     dispatch(votesCheckRequest())
   }, [dispatch]);
-  console.log(theme);
+
   const handleTheme = (type) => {
     if(!type) {
       // Light
-      console.log('nay');
       dispatch(changeCurrentTheme(theme1))
     } else {
       // Dark
-      console.log('ye');
       dispatch(changeCurrentTheme(theme2))
     }
   }
 
   return (
-
-    <div className="App">
+    <main className="App">
       <Router>
         <ThemeProvider theme={theme}>
           <GlobalStyles />
@@ -48,13 +49,13 @@ function App() {
             <Route path='/logout' component={SignOutContainer} />
             <Route path='/r' component={SubReaditPage} />
             <Route exact path='/create-post' component={CreatePostPageContainer} />
-            <Route exact path='/update-post/:id' component={UpdatePostPageContainer} />
-            <Route exact path='/:homeParams' component={HomePageContainer} />
+            <Route exact path='/update-post/:subReadit/:id' component={UpdatePostPageContainer} />
             <Route exact path='/' component={HomePageContainer} />
+            <Route path="/:anything" component={NotFoundPage} />
           </Switch>
         </ThemeProvider>
       </Router>
-    </div>
+    </main>
   );
 }
 

@@ -20,6 +20,8 @@ export const theme1 = {
   quinary: black,
   backgroundColor: '#DAE0E6',
   text: black,
+  success: '#4bb543',
+  failure: '#ffcc00',
   formBackground: 'right',
   vote: {
     up: orange,
@@ -51,6 +53,8 @@ export const theme2 = {
   quinary: silver,
   backgroundColor: black,
   text: silver,
+  success: '#4bb543',
+  failure: '#ffcc00',
   formBackground: 'left',
   vote: {
     up: orange,

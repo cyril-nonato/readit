@@ -5,6 +5,7 @@ import CustomButton from '../custom-button/custom-button.component'
 import FormArea from '../form-area/form-area.component'
 import Comment from '../comment/comment.component'
 import PostCard from '../post-card/post-card.component'
+import PopUp from '../pop-up/pop-up.component'
 
 const SubReaditPost = ({
   selectCrudPostPost,
@@ -13,6 +14,10 @@ const SubReaditPost = ({
   selectAuthUserCreds,
   onDeletePostRequest,
   history,
+  selectCrudPostSuccess,
+  selectCrudPostFailure,
+  selectCrudPostPopUp,
+  onCrudPostClearPopUp
 }) => {
 
   const { comments, uid } = selectCrudPostPost
@@ -36,12 +41,23 @@ const SubReaditPost = ({
 
   const handleDelete = () => {
     onDeletePostRequest(selectCrudPostPost.id)
+  };
+
+  const handlePopUpClear = () => {
+    if(selectCrudPostSuccess) {
+      onCrudPostClearPopUp();
+      history.push('/');
+    } else {
+      onCrudPostClearPopUp();
+    }
   }
+
 
   const showButton = selectAuthUserCreds ? selectAuthUserCreds.uid === uid : null;
   
   return (
     <S.Container>
+      <PopUp checkPopUp={selectCrudPostPopUp} success={selectCrudPostSuccess} failure={selectCrudPostFailure} clear={handlePopUpClear} />
       <S.Background background={background}>
         <S.BgDetails>
           <S.Icon src={icon} />

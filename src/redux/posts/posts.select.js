@@ -21,3 +21,8 @@ export const selectPostsFilteredPostsIsLoading = createSelector(
   [selectPostsFilteredPosts],
   filteredPosts => !!filteredPosts
 );
+
+export const selectPostsFailure = createSelector(
+  [selectPosts],
+  posts => !!posts.failure
+);

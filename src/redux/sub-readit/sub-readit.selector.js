@@ -22,3 +22,8 @@ export const selectSubReaditSubIsLoading = createSelector(
   [selectSubReadit],
   subReadit => !!subReadit.sub
 );
+
+export const selectSubReaditFailure = createSelector(
+  [selectSubReadit],
+  subReadit => !!subReadit.failure
+)

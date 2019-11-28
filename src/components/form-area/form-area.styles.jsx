@@ -42,6 +42,7 @@ export const Label = styled.label`
   transition: all .2s ease-in;
   text-transform: uppercase;
   font-weight: bold;
+  z-index: 5;
 
   &::after {
     content: '';

@@ -8,14 +8,17 @@ const SubReaditPostPage = ({
   onCrudCancelRequest
 }) => {
 
+  // Query single post
   useEffect(() => {
     onReadPostRequest(subReadit, id)
   }, [onReadPostRequest, subReadit, id]);
 
+  // Query single subReadit
   useEffect(() => {
     onSubReaditRequest(subReadit);
   }, [onSubReaditRequest, subReadit]);
 
+  // Cancels listener to live changes in post
   useEffect(() => {
     return () => {
       onCrudCancelRequest()

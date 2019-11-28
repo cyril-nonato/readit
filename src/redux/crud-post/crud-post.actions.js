@@ -30,9 +30,9 @@ export const readPostRequestFailure = (message = 'success') => ({
   payload: { message }
 });
 
-export const updatePostRequest = (post, id) => ({
+export const updatePostRequest = (post) => ({
   type: actionTypes.UPDATE_POST_REQUEST,
-  payload: { post, id }
+  payload: { post }
 });
 
 export const updatePostRequestSuccess = (message = 'success') => ({
@@ -68,3 +68,7 @@ export const crudCancelledRequest = (message = 'request cancelled') => ({
   type: actionTypes.CRUD_CANCELLED_REQUEST,
   payload: { message }
 });
+
+export const crudPostClearPopUp = () => ({
+  type: actionTypes.CRUD_CLEAR_POP_UP
+})

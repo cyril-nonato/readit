@@ -4,6 +4,8 @@ import * as S from './comment.styles'
 import timeAgo from '../utils/timeAgo';
 
 const Comment = ({comment: {comment, commented_by, created_at}}) => {
+  
+  // Convert timestamp to time ago
   const time = timeAgo(created_at);
 
   return (

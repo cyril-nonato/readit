@@ -60,13 +60,6 @@ export const H3 = styled.h3`
   ${mediaWidthSize};
 `;
 
-export const Span = styled.span`
-  font-size: 1.4rem;
-  color: ${props => props.theme.tertiary};
-  display: inline-block;
-  margin-bottom: 1rem;
-`
-
 const activePost = css`
   border-bottom: 2px solid ${props => props.theme.secondary};
 `;
@@ -79,6 +72,8 @@ const checkActiveLink = props => {
   if (props.active === 'link') {
     return linkPost
   }
+
+  return null;
 }
 
 const checkActivePost = props => {

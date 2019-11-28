@@ -4,18 +4,20 @@ import CreatePostContainer from '../../components/create-post/create-post.contai
 
 const CreatePostPage = ({ selectAuthUserCreds,selectSubReaditLists, onSubReaditListsRequest }) => {
 
+  // Gets all subReadit lists
   useEffect(() => {
     if(!selectSubReaditLists) {
       onSubReaditListsRequest()
     }
   }, [selectSubReaditLists, onSubReaditListsRequest]);
 
+  // Check for auth
   if(!selectAuthUserCreds) {
     return <Redirect to='/' />
   }
 
   return (
-    <CreatePostContainer lists={selectSubReaditLists} />
+    <CreatePostContainer />
   );
 }
 

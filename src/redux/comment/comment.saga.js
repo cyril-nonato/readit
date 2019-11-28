@@ -1,5 +1,5 @@
-import { call, all, put, takeLeading, select, take, fork, cancel, cancelled } from 'redux-saga/effects'
-import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
+import { call, all, put, takeLeading, select } from 'redux-saga/effects'
+import rsf, { firebase } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './comment.types'
 import { selectAuthUserCreds } from '../auth/auth.selector'
 import { selectCrudPostPost } from '../crud-post/crud-post.selector';
@@ -15,8 +15,11 @@ function* addCommentRequestSagaAsync({ payload: { comment } }) {
     comment
   };
 
+  // push new comment to the comments lists
   const updatedComments = updateComment(comments, commentToAdd);
+  // Convert Array to Object
   const newObjComment = arrayToObj(updatedComments);
+  
   try {
     yield call(rsf.firestore.updateDocument, `posts/${id}`, 'comments', newObjComment);
     yield put(addCommentRequestSuccess());

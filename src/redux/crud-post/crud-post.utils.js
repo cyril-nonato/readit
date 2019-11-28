@@ -7,11 +7,14 @@ export const checkIfLinkOrPost = post => {
     throw Error('Title should be 2 letters long')
   }
 
-  if (post.text) {
+  if (post.type === 'post') {
     return {
       subReadit: post.subReadit,
       text: post.text,
-      title: post.title
+      title: post.title,
+      image: '',
+      type: 'post',
+      edited: post.edited
     }
   }
 
@@ -24,7 +27,10 @@ export const checkIfLinkOrPost = post => {
   return {
     subReadit: post.subReadit,
     image: post.image,
-    title: post.title
+    title: post.title,
+    text: '',
+    type: 'link',
+    edited: post.edited
   }
 }
 

@@ -1,10 +1,17 @@
 import actionTypes from "./crud-post.types"
 
 const INITIAL_STATE = {
+  createPostData: {
+    title: '',
+    text: '',
+    image: '',
+    icon: '',
+    subReadit: ''
+  },
   success: null,
   failure: null,
   loading: false,
-  popup: false,
+  popUp: false,
   post: null,
 }
 
@@ -40,9 +47,7 @@ const crudPostReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        success: action.payload.message,
         failure: null,
-        popUp: true,
         post: action.payload.post
       }
     case actionTypes.READ_POST_REQUEST_FAILURE:
@@ -100,6 +105,13 @@ const crudPostReducer = (state = INITIAL_STATE, action) => {
         ...state,
         post: null,
         popUp: false
+      }
+    case actionTypes.CRUD_CLEAR_POP_UP:
+      return {
+        ...state,
+        success: null,
+        failure: null,
+        popUp: false,
       }
     default: return state;
   }

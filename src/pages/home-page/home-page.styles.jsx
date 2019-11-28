@@ -42,7 +42,7 @@ export const Grid = styled.div`
 
 `;
 
-export const Container = styled.div`
+export const Container = styled.section`
 
   ${Grid} {
     margin: 2rem 1rem;

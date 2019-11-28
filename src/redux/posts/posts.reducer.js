@@ -33,12 +33,12 @@ const postsReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         popUp: true
       }
-    case actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST:
+    case actionTypes.POSTS_FILTER_BY_SUBREADIT_REQUEST:
       return {
         ...state,
         loading: true,
       }
-    case actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST_SUCCESS:
+    case actionTypes.POSTS_FILTER_BY_SUBREADIT_REQUEST_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -46,7 +46,7 @@ const postsReducer = (state = INITIAL_STATE, action) => {
         success: action.payload.message,
         popUp: true,
       }
-    case actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST_FAILURE:
+    case actionTypes.POSTS_FILTER_BY_SUBREADIT_REQUEST_FAILURE:
       return {
         ...state,
         loading: false,

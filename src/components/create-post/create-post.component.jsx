@@ -1,51 +1,78 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import * as S from '../sign-in-sign-up-styles/styles'
 import * as D from './create-post.styles'
 import FormInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component';
-import FormArea from '../form-area/form-area.component';
+import FormArea from '../form-area/form-area.component'
 import SelectSubreadit from '../select-sub-readit/select-sub-readit.component';
+import PopUp from '../pop-up/pop-up.component'
 
 const CreatePost = ({ 
   onSignInRequest, 
-  lists, 
+  selectSubReaditLists, 
   selectSubReaditSub,
+  selectCrudPostSuccess,
+  selectCrudPostFailure,
+  selectCrudPostPopUp,
+  onCrudPostClearPopUp,
   onCreatePostRequest 
 }) => {
-  const [postData, setPostData] = useState({
+
+
+
+  const startingData = {
     title: '',
     text: '',
     image: '',
     icon: '',
     subReadit: '',
-  });
+  }
+  const [postData, setPostData] = useState(startingData);
 
-  // const [selectedSub, setSelectedSub] = useState({selectSubReaditSub});
-
+  useEffect(() => {
+    return () => {
+      onCrudPostClearPopUp()
+    }
+  }, [onCrudPostClearPopUp])
+  // Sets the type of the data, link or post
   const [active, setActive] = useState('post');
 
   const handleChange = e => {
     setPostData({
       ...postData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     })
   };
 
+  // Shows icon and name of subReadit in the select subReadit
   const handleIconAndId = item => {
     setPostData({
       ...postData,
       subReadit: item.id,
       icon: item.icon
-    })
+    });
   }
 
   const handleSubmit = e => {
     e.preventDefault();
-    onCreatePostRequest(postData)
+    onCreatePostRequest({
+      ...postData,
+      type: active
+    });
   };
 
-  const handleSelectPost = e => {
+  const handlePopUp = () => {
+    if(selectCrudPostSuccess) {
+      setPostData(startingData);
+      onCrudPostClearPopUp();
+    } else if (selectCrudPostFailure) {
+      onCrudPostClearPopUp();   
+    }
+  }
+
+  // Sets which input to show, link or post
+  const handleSelectType = e => {
     setActive(e.target.getAttribute('data-id'));
   }
 
@@ -62,11 +89,13 @@ const CreatePost = ({
 
   return (
     <D.Container>
+      <PopUp checkPopUp={selectCrudPostPopUp} clear={handlePopUp} success={selectCrudPostSuccess} failure={selectCrudPostFailure} />
       <S.SideImg />
       <S.Form onSubmit={handleSubmit}>
         <D.H3>Create a post</D.H3>
-        <SelectSubreadit handleIconAndId={handleIconAndId} postData={postData} lists={lists} />
-        <D.ButtonContainer active={active} onClick={handleSelectPost}>
+        <D.Span>Select a Sub</D.Span>
+        <SelectSubreadit handleIconAndId={handleIconAndId} postData={postData} lists={selectSubReaditLists} />
+        <D.ButtonContainer active={active} onClick={handleSelectType}>
           
           <D.PostContainer data-id='post'>
             <D.PostIcon data-id='post' />
@@ -83,7 +112,9 @@ const CreatePost = ({
           </D.LinkContainer>
         </D.ButtonContainer>
         <FormInput value={postData.title} onChange={handleChange} name='title' label='title' type='input' />
-        {formType}
+        {
+          formType
+        }
         <CustomButton type='submit'>Submit</CustomButton>
         <S.Span>Go to Homepage? <S.Anchor to='/'>Home</S.Anchor></S.Span>
       </S.Form>

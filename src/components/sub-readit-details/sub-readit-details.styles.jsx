@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
-
 export const Background = styled.div`
   height: 200px;
   background: url(${props => props.background});
@@ -23,7 +21,7 @@ export const Icon = styled.img`
   width: 6rem;
 `;
 
-export const Name = styled.h2`
+export const Name = styled.h4`
   letter-spacing: 1px;
   color: ${props => props.theme.primary};
 `;
@@ -36,7 +34,7 @@ export const BgDetails = styled.div`
   align-items: center;
 
   ${Name} {
-    color: ${props => props.theme.text};
+    color: ${props => props.theme.primary};
     font-size: 2rem;
   }
 
@@ -77,7 +75,7 @@ export const Community = styled.div`
 `;
 
 
-export const Title = styled(Link)`
+export const Title = styled.span`
   display: flex;
   align-items: center;
   padding: 1rem;

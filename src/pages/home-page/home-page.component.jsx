@@ -14,13 +14,14 @@ const HomePage = ({
   loadingSubs,
   onPostsCancelRequest,
   onSubReaditCancelRequest,
-  match: { params: { homeParams } },
 }) => {
 
   useEffect(() => {
-    onPostsRequest(homeParams);
+    if (!selectPostsAllPosts) {
+      onPostsRequest();
+    }
 
-  }, [onPostsRequest, selectPostsAllPosts, homeParams]);
+  }, [onPostsRequest, selectPostsAllPosts]);
 
   useEffect(() => {
     if (!selectSubReaditLists) {

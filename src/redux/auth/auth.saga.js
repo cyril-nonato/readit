@@ -29,6 +29,7 @@ function* signUpRequestSagaAsync({ payload: { userCreds: { email, password, conf
       username,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
     }
+    
     // Checks for any username matching
     const querySnapshot = yield call(rsf.firestore.getDocument, firestore.doc(`userslist/${username}`))
     if(querySnapshot.exists) {

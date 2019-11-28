@@ -2,11 +2,12 @@ import styled, { css } from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
+// Change grid depending if there is a user or not
 const gridMain = css`
-  grid-template-columns: 1.15fr 2fr .5fr .5fr .5fr;
+  grid-template-columns: 1fr 1fr .5fr .5fr .5fr .5fr .25fr;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
-    grid-template-columns: 1.15fr 6fr .25fr .25fr .25fr .25fr;
+    grid-template-columns: 1.15fr 5fr .25fr .25fr .25fr .25fr .25fr;
   }
   
 `;
@@ -20,7 +21,7 @@ const checkSelectAuthUserCreds = props => {
 
 export const Navigation = styled.div`
   display: grid;
-  grid-template-columns: 1.15fr 2fr .5fr .5fr .5fr .25fr;
+  grid-template-columns: 1.15fr 2fr .5fr .5fr .5fr;
   grid-template-rows: 50px;
   grid-gap: 1rem;
   position: fixed;
@@ -32,7 +33,7 @@ export const Navigation = styled.div`
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     padding: 0 5rem;
-    grid-template-columns: 1.15fr 5fr .25fr .25fr 1fr 1fr .5fr;
+    grid-template-columns: 1.15fr 5fr .25fr 1fr 1fr .5fr;
 
   }
 
@@ -217,3 +218,20 @@ export const UserLogo = styled.img`
 export const Sub = styled.div`
 
 `;
+
+export const CurrentUser = styled.span`
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: ${props => props.theme.quinary};
+`;
+
+export const CurrentUserContainer = styled.div`
+  justify-self: center;
+  align-self: center;
+  position: relative;
+
+  &:hover ${Text} {
+    display: block;
+  }
+`

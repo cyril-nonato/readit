@@ -15,7 +15,7 @@ const SubReaditDetails = ({ sub: { background, icon, id, text } }) => {
       </S.Background>
       <S.Content>
         <S.Community>Community Details</S.Community>
-        <S.Title to={`/r/${id}`}>
+        <S.Title>
           <S.Icon src={icon} />
           <S.Name>r/{id}</S.Name>
         </S.Title>

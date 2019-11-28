@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import UpdatePostContainer from '../../components/update-post/update-post.container';
 
 const UpdatePostPage = ({ 
   match: {params: {subReadit, id}}, 
@@ -8,16 +9,10 @@ const UpdatePostPage = ({
   onCrudCancelRequest
 }) => {
 
+  //Query the specific post
   useEffect(() => {
     onReadPostRequest(subReadit, id)
   }, [onReadPostRequest, subReadit, id]);
-
-  useEffect(() => {
-    if (!selectSubReaditLists) {
-      onSubReaditListsRequest()
-    }
-
-  }, [onSubReaditListsRequest, selectSubReaditLists]);
 
   useEffect(() => {
     return () => {
@@ -26,7 +21,7 @@ const UpdatePostPage = ({
   }, [onCrudCancelRequest])
 
   return (
-    <div></div>
+    <UpdatePostContainer />
   );
 }
 

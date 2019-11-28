@@ -2,7 +2,7 @@ import { call, all, put, take, fork, cancel, cancelled } from 'redux-saga/effect
 import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './posts.types'
 import { docsToMap } from '../utils';
-import { postsRequestSuccess, postsRequestFailure, postFilterBySubReaditRequestSuccess, postFilterBySubReaditRequestFailure, postsCancelledRequest } from './posts.actions';
+import { postsRequestSuccess, postsRequestFailure, postsFilterBySubReaditRequestSuccess, postsFilterBySubReaditRequestFailure, postsCancelledRequest } from './posts.actions';
 import { addCommentsLengthProps } from './posts.utils';
 
 function* postsRequestSagaAsync(parameter) {
@@ -50,7 +50,7 @@ function* postsRequestSaga() {
 
 }
 
-function* postFilterBySubReaditRequestSagaAsync(subReadit) {
+function* postsFilterBySubReaditRequestSagaAsync(subReadit) {
   const channel = yield call(rsf.firestore.channel,
     firestore.collection(`posts`)
       .where('subReadit', "==", subReadit)
@@ -62,10 +62,10 @@ function* postFilterBySubReaditRequestSagaAsync(subReadit) {
       const querySnapshot = yield take(channel);
       const docs = querySnapshot.docs;
       const posts = docsToMap(docs);
-      yield put(postFilterBySubReaditRequestSuccess(posts, 'Fetched success'));
+      yield put(postsFilterBySubReaditRequestSuccess(posts, 'Fetched success'));
     }
   } catch (error) {
-    yield put(postFilterBySubReaditRequestFailure(error.message));
+    yield put(postsFilterBySubReaditRequestFailure(error.message));
   } finally {
     if (yield cancelled()) {
       yield put(postsCancelledRequest())
@@ -73,10 +73,10 @@ function* postFilterBySubReaditRequestSagaAsync(subReadit) {
   }
 }
 
-function* postFilterBySubReaditRequestSaga() {
+function* postsFilterBySubReaditRequestSaga() {
   while (true) {
-    const { payload: { subReadit } } = yield take(actionTypes.POST_FILTER_BY_SUBREADIT_REQUEST);
-    const sync = yield fork(postFilterBySubReaditRequestSagaAsync, subReadit);
+    const { payload: { subReadit } } = yield take(actionTypes.POSTS_FILTER_BY_SUBREADIT_REQUEST);
+    const sync = yield fork(postsFilterBySubReaditRequestSagaAsync, subReadit);
     yield take(actionTypes.POSTS_CANCEL_REQUEST);
     yield cancel(sync);
   }
@@ -85,6 +85,6 @@ function* postFilterBySubReaditRequestSaga() {
 export function* postsSaga() {
   yield all([
     call(postsRequestSaga),
-    call(postFilterBySubReaditRequestSaga)
+    call(postsFilterBySubReaditRequestSaga)
   ])
 }

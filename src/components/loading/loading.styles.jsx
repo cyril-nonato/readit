@@ -6,7 +6,7 @@ export const LoadingContainer = styled.div`
   left: 0;
   height: 100vh;
   width: 100vw;
-  z-index: 6;
+  z-index: 50;
   display: flex;
   justify-content: center;
   align-items: center;

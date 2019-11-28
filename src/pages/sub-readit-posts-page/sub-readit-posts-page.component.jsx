@@ -5,25 +5,29 @@ import SubReaditDetailsContainer from '../../components/sub-readit-details/sub-r
 import SubNavigationContainer from '../../components/sub-navigation/sub-navigation.container';
 
 const SubReaditPostsPage = ({
-  onPostFilterBySubReaditRequest,
+  onPostsFilterBySubReaditRequest,
   onSubReaditRequest,
   loadingPosts,
   loadingSubs,
   selectPostsFilteredPosts,
   selectSubReaditSub,
   onPostsCancelRequest,
+  error,
   match: { params: { subReadit } }
 }) => {
-
+  console.log(error);
+  //Filter posts by subReadit
   useEffect(() => {
-    onPostFilterBySubReaditRequest(subReadit);
+    onPostsFilterBySubReaditRequest(subReadit);
 
-  }, [onPostFilterBySubReaditRequest, subReadit]);
+  }, [onPostsFilterBySubReaditRequest, subReadit]);
 
+  //Query a single subReadit
   useEffect(() => {
     onSubReaditRequest(subReadit)
   }, [onSubReaditRequest, subReadit]);
 
+  // Removes listener to live changes
   useEffect(() => {
     return () => {
       onPostsCancelRequest();

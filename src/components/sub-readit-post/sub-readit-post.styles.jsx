@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
-export const Container = styled.div`
-  margin: 8rem 0 3rem 0;
+export const Container = styled.article`
+  margin: 5rem 0 3rem 0;
   display: grid;
   grid-template-columns: 1fr;
   position: relative;

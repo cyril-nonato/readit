@@ -8,18 +8,23 @@ import { selectCrudPostPost, selectCrudPostPostIsLoading } from '../../redux/cru
 import { addCommentRequest } from "../../redux/comment/comment.actions";
 import { selectAuthUserCreds } from "../../redux/auth/auth.selector";
 import { withRouter } from 'react-router-dom'
-import { deletePostRequest } from "../../redux/crud-post/crud-post.actions";
+import { deletePostRequest, crudPostClearPopUp } from "../../redux/crud-post/crud-post.actions";
+import { selectCrudPostSuccess, selectCrudPostFailure, selectCrudPostPopUp } from '../../redux/crud-post/crud-post.selector';
 
 const mapStateToProps = createStructuredSelector({
   selectCrudPostPost,
   selectSubReaditSub,
   selectAuthUserCreds,
+  selectCrudPostSuccess,
+  selectCrudPostFailure,
+  selectCrudPostPopUp,
   loading: state => !(selectSubReaditSubIsLoading(state) && selectCrudPostPostIsLoading(state))
 });
 
 const mapDispatchToProps = dispatch => ({
   onAddCommentRequest: (comment) => dispatch(addCommentRequest(comment)),
-  onDeletePostRequest: (id) => dispatch(deletePostRequest(id))
+  onDeletePostRequest: (id) => dispatch(deletePostRequest(id)),
+  onCrudPostClearPopUp: () => dispatch(crudPostClearPopUp()),
 })
 
 const SubReaditPostContainer = compose(connect(mapStateToProps, mapDispatchToProps), withRouter, WithLoading)(SubReaditPost);

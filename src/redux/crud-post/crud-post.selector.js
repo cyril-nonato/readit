@@ -11,3 +11,23 @@ export const selectCrudPostPostIsLoading = createSelector(
   [selectCrudPostPost],
   post => !!post
 );
+
+export const selectCrudPostSuccess = createSelector(
+  [selectCrudPost],
+  crudPost => crudPost.success
+);
+
+export const selectCrudPostFailure = createSelector(
+  [selectCrudPost],
+  crudPost => crudPost.failure
+);
+
+export const selectCrudPostPopUp = createSelector(
+  [selectCrudPost],
+  crudPost => crudPost.popUp 
+);
+
+export const selectCrudPostCreatePostData = createSelector(
+  [selectCrudPost],
+  crudPost => crudPost.createPostData 
+);

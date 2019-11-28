@@ -2,12 +2,14 @@ import { call, all, put, takeLeading, select, take, fork, cancel, cancelled } fr
 import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './crud-post.types'
 import { selectAuthUserCreds } from '../auth/auth.selector'
-import { createPostRequestFailure, createPostRequestSuccess, crudCancelledRequest, readPostRequestFailure, readPostRequestSuccess, deletePostRequestSuccess, deletePostRequestFailure } from './crud-post.actions';
+import { createPostRequestFailure, createPostRequestSuccess, crudCancelledRequest, readPostRequestFailure, readPostRequestSuccess, deletePostRequestSuccess, deletePostRequestFailure, updatePostRequestFailure } from './crud-post.actions';
 import { checkIfLinkOrPost, convertPostCommentsToArray } from './crud-post.utils';
 
 function* createPostSagaAsync({ payload: { post } }) {
   try {
     const userCreds = yield select(selectAuthUserCreds);
+
+    // Removes the link string or post string depending on type 
     const checkPost = checkIfLinkOrPost(post);
 
     const updatedPost = {
@@ -15,8 +17,9 @@ function* createPostSagaAsync({ payload: { post } }) {
       created_by: userCreds.username,
       uid: userCreds.uid,
       edited: false,
+      type: post.type,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
-      votes: 0
+      votes: 0,
     }
 
     yield call(rsf.firestore.addDocument, 'posts', updatedPost);
@@ -69,8 +72,14 @@ function* readPostSaga() {
   }
 }
 
-function* updatePostSagaAsync({ payload: { post, id } }) {
-  yield console.log(post, id);
+function* updatePostSagaAsync({ payload: { post } }) {
+  const checkPost = checkIfLinkOrPost(post);
+  try {
+    yield call(rsf.firestore.updateDocument, `posts/${post.id}`, checkPost);
+
+  } catch (error) {
+    yield put(updatePostRequestFailure(error.message))
+  }
 }
 
 function* updatePostSaga() {
