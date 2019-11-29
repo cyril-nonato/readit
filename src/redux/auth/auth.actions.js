@@ -30,8 +30,8 @@ export const signInRequestFailure = (message) => ({
   payload: { message }
 });
 
-export const authPopUp = () => ({
-  type: actionTypes.AUTH_POP_UP,
+export const authClearPopUp = () => ({
+  type: actionTypes.AUTH_CLEAR_POP_UP,
 });
 
 export const signOutRequest = () => ({

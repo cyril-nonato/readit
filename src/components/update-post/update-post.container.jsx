@@ -4,18 +4,22 @@ import { selectAuthUserCreds } from '../../redux/auth/auth.selector';
 import { createStructuredSelector } from 'reselect';
 import WithLoading from '../with-loading/with-loading.component';
 import { selectSubReaditSub } from '../../redux/sub-readit/sub-readit.selector';
-import { updatePostRequest } from '../../redux/crud-post/crud-post.actions';
+import { updatePostRequest, crudPostClearPopUp } from '../../redux/crud-post/crud-post.actions';
 import UpdatePost from './update-post.component';
-import { selectCrudPostPost, selectCrudPostPostIsLoading } from '../../redux/crud-post/crud-post.selector';
+import { selectCrudPostPost, selectCrudPostPostIsLoading, selectCrudPostSuccess, selectCrudPostFailure, selectCrudPostPopUp } from '../../redux/crud-post/crud-post.selector';
 
 const mapStateToProps = createStructuredSelector({
   selectAuthUserCreds,
   selectSubReaditSub,
   selectCrudPostPost,
-  loading: state => ! selectCrudPostPostIsLoading(state)
+  selectCrudPostSuccess,
+  selectCrudPostFailure,
+  selectCrudPostPopUp,
+  loading: state => !selectCrudPostPostIsLoading(state)
 });
 
 const mapDispatchToProps = dispatch => ({
+  onCrudPostPopUp: () => dispatch(crudPostClearPopUp()),
   onUpdatePostRequest: (post) => dispatch(updatePostRequest(post))
 });
 

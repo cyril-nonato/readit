@@ -20,7 +20,7 @@ const SubReaditPost = ({
   onCrudPostClearPopUp
 }) => {
 
-  const { comments, uid } = selectCrudPostPost
+  const { comments, uid, subReadit } = selectCrudPostPost
 
   const [newComment, setNewComment] = useState('');
   const handleChange = e => {
@@ -68,6 +68,12 @@ const SubReaditPost = ({
           {
             showButton &&
             <S.DeleteButton onClick={handleDelete}>&#10006;</S.DeleteButton>
+          }
+          {
+            showButton &&
+            <S.Edit to={`/update-post/${subReadit}/${selectCrudPostPost.id}`}>
+              <S.EditIcon />
+            </S.Edit>
           }
           <PostCard post={selectCrudPostPost} />
           <S.Form onSubmit={handleSubmit}>

@@ -3,7 +3,7 @@ import React from 'react'
 import * as S from './sub-readit-details.styles'
 import CustomButton from '../custom-button/custom-button.component'
 
-const SubReaditDetails = ({ sub: { background, icon, id, text } }) => {
+const SubReaditDetails = ({ user, sub: { background, icon, id, text } }) => {
 
   return (
     <React.Fragment>
@@ -21,7 +21,14 @@ const SubReaditDetails = ({ sub: { background, icon, id, text } }) => {
         </S.Title>
         <S.Text>{text}</S.Text>
         <S.Button>
-          <CustomButton isLink to='/create-post'>Create post</CustomButton>
+          {
+            !user &&
+            <CustomButton isLink to='/login'>Create post</CustomButton>
+          }
+          {
+            user &&
+            <CustomButton isLink to='/create-post'>Create post</CustomButton>
+          }
         </S.Button>
       </S.Content>
     </React.Fragment>

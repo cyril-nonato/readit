@@ -30,7 +30,7 @@ const PostCompact = ({ post, type }) => {
         }
       </S.ImageContainer>
       <S.VotesContainer>
-        <VotesContainer type={type} id={id} value={votes} />
+        <VotesContainer created_by={created_by} type={type} id={id} value={votes} />
       </S.VotesContainer>
       <S.CommentsContainerLink to={`/r/${subReadit}/${id}`}>
         <S.CommentsHover>

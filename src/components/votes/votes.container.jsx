@@ -4,9 +4,11 @@ import { voteUpRequest, voteDownRequest } from '../../redux/votes/votes.actions'
 import Votes from './votes.component';
 import { createStructuredSelector } from 'reselect';
 import { selectVotesVotesList } from '../../redux/votes/votes.select';
+import { selectAuthUserCreds } from '../../redux/auth/auth.selector';
 
 const mapStateToProps = createStructuredSelector({
   selectVotesVotesList,
+  selectAuthUserCreds,
 })
 
 const mapDispatchToProps = dispatch => ({

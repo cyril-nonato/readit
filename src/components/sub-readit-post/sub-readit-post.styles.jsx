@@ -160,7 +160,7 @@ export const DeleteButton = styled.button`
   padding: .75rem;
   position: absolute;
   z-index: 5;
-  top:0;
+  top: 10px;
   right: 0;
   color: ${props => props.theme.tertiary};
   font-size: 1.6rem;
@@ -169,10 +169,41 @@ export const DeleteButton = styled.button`
     cursor: pointer;
     color: ${props => props.theme.secondary};
   }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    top: 0;
+  }
 `;
 
 export const Back = styled.div`
   width: 100%;
   height: 100%;
   
+`;
+
+
+export const EditIcon = styled.div`
+  background-color: ${props => props.theme.tertiary};
+  clip-path: polygon(73% 0, 100% 24%, 25% 100%, 0 100%, 0 73%);
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+`;
+
+export const Edit = styled(Link)`
+  margin-left: 5px;
+  position: absolute;
+  top: 12.5px;
+  right: 30px;
+  padding: .75rem;
+  position: absolute;
+  z-index: 5;
+
+  &:hover ${EditIcon} {
+    background-color: ${props => props.theme.secondary};
+  }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    top: 2.5px;
+  }
 `;

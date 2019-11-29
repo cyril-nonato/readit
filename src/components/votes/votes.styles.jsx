@@ -51,11 +51,13 @@ export const Down = styled.div`
   ${checkForDown};
 `;
 
-export const ArrowContainer = styled.div`
+export const ArrowContainer = styled.button`
   height: 17.5px;
   width: 17.5px;
   padding: 2.5px;
-
+  border: none;
+  background-color: transparent;
+  
   &:hover {
     cursor: pointer;
     background-color: ${props => props.theme.quarternary};  

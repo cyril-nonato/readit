@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import * as S from './votes.styles'
 
-const Votes = ({styleType, selectVotesVotesList, value, id, onVoteUpRequest, onVoteDownRequest}) => {
-  
+const Votes = ({ created_by, selectVotesVotesList, value, id, onVoteUpRequest, onVoteDownRequest, selectAuthUserCreds }) => {
+  let checkForOwner = null;
+  if (selectAuthUserCreds) {
+    checkForOwner = created_by === selectAuthUserCreds.username
+  }
+  // eslint-disable-next-line no-unused-vars
+  const [disable, setDisable] = useState(checkForOwner);
+
+  // Css styling
   let checkTypeVote;
-  if(selectVotesVotesList) {
-    if(selectVotesVotesList.hasOwnProperty(id)) {
+  if (selectVotesVotesList) {
+    if (selectVotesVotesList.hasOwnProperty(id)) {
       checkTypeVote = selectVotesVotesList[id]
     } else {
       checkTypeVote = 'no vote yet'
@@ -15,11 +22,11 @@ const Votes = ({styleType, selectVotesVotesList, value, id, onVoteUpRequest, onV
 
   return (
     <React.Fragment>
-      <S.ArrowContainer onClick={() => onVoteUpRequest(id, value)}>
+      <S.ArrowContainer disabled={disable} onClick={() => onVoteUpRequest(id, value)}>
         <S.Up checkTypeVote={checkTypeVote} />
       </S.ArrowContainer>
       <S.VoteValue>{value}</S.VoteValue>
-      <S.ArrowContainer  onClick={() => onVoteDownRequest(id, value)}>
+      <S.ArrowContainer disabled={disable} onClick={() => onVoteDownRequest(id, value)}>
         <S.Down checkTypeVote={checkTypeVote} />
       </S.ArrowContainer>
     </React.Fragment>

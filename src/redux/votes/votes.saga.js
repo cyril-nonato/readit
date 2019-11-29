@@ -4,27 +4,33 @@ import actionTypes from './votes.types'
 import { selectAuthUserCreds } from '../auth/auth.selector';
 import { votesCheckRequestSuccess, votesCheckRequestFailure, voteUpRequestSuccess, voteDownRequestFailure, voteDownRequestSuccess, voteUpRequestFailure, votesCheckCancelledRequest } from './votes.actions';
 import { selectVotesVotesList } from './votes.select';
-import { checkUpVoteOrNotVote, checkDownVoteOrNotVote } from './votes.utils';
+import { checkVote } from './votes.utils';
 
 function* voteUpRequestSagaAsync({ payload: { id, value } }) {
   try {
 
     const votesList = yield select(selectVotesVotesList);
     const { username } = yield select(selectAuthUserCreds);
-    console.log(votesList);
+
     // Checks user vote boolean for a specific post
-    const boolean = checkUpVoteOrNotVote(votesList, id);
-    console.log(boolean);
-    if (boolean) {
+    const voteType = checkVote(votesList, id);
+    if (voteType === 'upvote') {
       throw Error('Already Voted');
     };
     const votes = {
       ...votesList,
       [id]: true
     }
+  
+    if (voteType === 'no vote') {
+      yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
+      yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value + 1));
+    } else if (voteType === 'downvote') {
+      yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
+      yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value + 2));
+    }
 
-    yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
-    yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value + 1));
+
     yield put(voteUpRequestSuccess());
   } catch (error) {
     yield put(voteUpRequestFailure(error.message));
@@ -41,9 +47,9 @@ function* voteDownRequestSagaAsync({ payload: { id, value } }) {
     const { username } = yield select(selectAuthUserCreds);
 
     // Checks user vote boolean for a specific post
-    const boolean = checkDownVoteOrNotVote(votesList, id);
-    console.log(boolean);
-    if (boolean) {
+    const voteType = checkVote(votesList, id);
+
+    if (voteType === 'downvote') {
       throw Error('Already Voted')
     };
 
@@ -52,8 +58,14 @@ function* voteDownRequestSagaAsync({ payload: { id, value } }) {
       [id]: false
     }
 
-    yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
-    yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value - 1));
+    if (voteType === 'no vote') {
+      yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
+      yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value - 1));
+    } else if (voteType === 'upvote') {
+      yield call(rsf.firestore.updateDocument, `votes/${username}`, votes);
+      yield call(rsf.firestore.updateDocument, `posts/${id}`, `votes`, (value - 2));
+    }
+
     yield put(voteDownRequestSuccess());
   } catch (error) {
     yield put(voteDownRequestFailure(error.message));
@@ -66,7 +78,6 @@ function* voteDownRequestSaga() {
 
 function* votesCheckRequestSagaAsync(userCreds) {
 
-  console.log('ye i ran');
   const channel = yield call(rsf.firestore.channel,
     firestore.doc(`votes/${userCreds.username}`));
 
@@ -79,7 +90,7 @@ function* votesCheckRequestSagaAsync(userCreds) {
   } catch (error) {
     yield put(votesCheckRequestFailure(error.message))
   } finally {
-    if( yield cancelled()) {
+    if (yield cancelled()) {
       yield put(votesCheckCancelledRequest());
     }
   }
@@ -87,13 +98,8 @@ function* votesCheckRequestSagaAsync(userCreds) {
 
 function* votesCheckRequestSaga() {
 
-  while (yield take(actionTypes.VOTES_CHECK_REQUEST)) {
-    const userCreds = yield select(selectAuthUserCreds);
-
-    if (!userCreds) {
-      return null;
-    }
-
+  while (true) {
+    const { payload: { userCreds } } = yield take(actionTypes.VOTES_CHECK_REQUEST)
     const sync = yield fork(votesCheckRequestSagaAsync, userCreds);
     yield take(actionTypes.VOTES_CHECK_CANCEL_REQUEST);
     yield cancel(sync);

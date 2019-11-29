@@ -6,12 +6,17 @@ import FormInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component';
 import FormArea from '../form-area/form-area.component';
 import { checkForPostType } from '../utils/checkForPostType';
+import PopUp from '../pop-up/pop-up.component';
 
 const UpdatePost = ({
   lists,
   selectSubReaditSub,
   onUpdatePostRequest,
-  selectCrudPostPost
+  selectCrudPostPost,
+  selectCrudPostSuccess,
+  selectCrudPostFailure,
+  selectCrudPostPopUp,
+  onCrudPostPopUp
 }) => {
 
   const [postData, setPostData] = useState({
@@ -58,6 +63,7 @@ const UpdatePost = ({
   return (
     <D.Container>
       <S.SideImg />
+      <PopUp clear={onCrudPostPopUp} success={selectCrudPostSuccess} failure={selectCrudPostFailure} checkPopUp={selectCrudPostPopUp} />
       <S.Form onSubmit={handleSubmit}>
         <D.H3>Update post</D.H3>
         <D.ButtonContainer active={active} onClick={handleSelectType}>

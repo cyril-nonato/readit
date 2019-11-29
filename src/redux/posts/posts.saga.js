@@ -1,32 +1,21 @@
-import { call, all, put, take, fork, cancel, cancelled } from 'redux-saga/effects'
+import { call, all, put, take, fork, cancel, cancelled, select } from 'redux-saga/effects'
 import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './posts.types'
 import { docsToMap } from '../utils';
-import { postsRequestSuccess, postsRequestFailure, postsFilterBySubReaditRequestSuccess, postsFilterBySubReaditRequestFailure, postsCancelledRequest } from './posts.actions';
+import { postsRequestSuccess, postsRequestFailure, postsFilterBySubReaditRequestSuccess, postsFilterBySubReaditRequestFailure, postsCancelledRequest, postsFilterByUsernameRequestSuccess, postsFilterByUsernameRequestFailure } from './posts.actions';
 import { addCommentsLengthProps } from './posts.utils';
+import { selectAuthUserCreds } from '../auth/auth.selector';
 
-function* postsRequestSagaAsync(parameter) {
-  console.log(parameter);
-  let channel;
-  switch (parameter) {
-    case 'popular':
-    case undefined:
-      channel = yield call(rsf.firestore.channel,
-        firestore.collection('posts').orderBy('votes', 'desc'));
-      break;
-    case 'all':
-      channel = yield call(rsf.firestore.channel,
-        firestore.collection('posts').orderBy('created_at', 'desc'));
-      break;
-    default: throw Error('Not found');
-  }
+function* postsRequestSagaAsync() {
+  const channel = yield call(rsf.firestore.channel,
+    firestore.collection('posts').orderBy('created_at', 'desc'));;
 
   try {
     while (true) {
       const querySnapshot = yield take(channel);
       const docs = querySnapshot.docs;
       const posts = docsToMap(docs);
-      
+
       const updatedPosts = addCommentsLengthProps(posts)
 
       yield put(postsRequestSuccess(updatedPosts, 'Fetched success'));
@@ -47,7 +36,14 @@ function* postsRequestSaga() {
     yield take(actionTypes.POSTS_CANCEL_REQUEST);
     yield cancel(sync);
   }
+}
 
+function* postsFilter(channel) {
+  const querySnapshot = yield take(channel);
+  const docs = querySnapshot.docs;
+  const posts = docsToMap(docs);
+
+  return posts
 }
 
 function* postsFilterBySubReaditRequestSagaAsync(subReadit) {
@@ -59,9 +55,7 @@ function* postsFilterBySubReaditRequestSagaAsync(subReadit) {
 
   try {
     while (true) {
-      const querySnapshot = yield take(channel);
-      const docs = querySnapshot.docs;
-      const posts = docsToMap(docs);
+      const posts = yield call(postsFilter, channel)
       yield put(postsFilterBySubReaditRequestSuccess(posts, 'Fetched success'));
     }
   } catch (error) {
@@ -82,9 +76,38 @@ function* postsFilterBySubReaditRequestSaga() {
   }
 }
 
+function* postsFilterByUserNameRequestAsync() {
+  const { username } = yield select(selectAuthUserCreds);
+  const channel = yield call(rsf.firestore.channel,
+    firestore.collection(`posts`)
+      .where('created_by', "==", username)
+      .orderBy('created_at', 'desc')
+  );
+
+  try {
+    while (true) {
+      const posts = yield call(postsFilter, channel);
+      yield put(postsFilterByUsernameRequestSuccess(posts))
+    }
+  } catch (error) {
+    yield put(postsFilterByUsernameRequestFailure(error.message))
+  }
+
+}
+
+function* postsFilterByUserNameRequest() {
+  while (true) {
+    yield take(actionTypes.POSTS_FILTER_BY_USERNAME_REQUEST);
+    const sync = yield fork(postsFilterByUserNameRequestAsync);
+    yield take(actionTypes.POSTS_CANCEL_REQUEST);
+    yield cancel(sync);
+  }
+}
+
 export function* postsSaga() {
   yield all([
     call(postsRequestSaga),
-    call(postsFilterBySubReaditRequestSaga)
+    call(postsFilterBySubReaditRequestSaga),
+    call(postsFilterByUserNameRequest)
   ])
 }

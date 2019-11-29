@@ -7,10 +7,12 @@ import { subReaditRequest } from '../../redux/sub-readit/sub-readit.actions';
 import { selectSubReaditSub, selectSubReaditSubIsLoading, selectSubReaditFailure } from '../../redux/sub-readit/sub-readit.selector';
 import SubReaditPostsPage from './sub-readit-posts-page.component';
 import WithNotFound from '../../components/with-not-found/with-not-found.component';
+import { selectAuthUserCreds } from '../../redux/auth/auth.selector';
 
 const mapStateToProps = createStructuredSelector({
   selectSubReaditSub,
   selectPostsFilteredPosts,
+  selectAuthUserCreds: selectAuthUserCreds,
   error: selectSubReaditFailure,
   loadingPosts: state => !selectPostsFilteredPostsIsLoading(state),
   loadingSubs: state => !selectSubReaditSubIsLoading(state)

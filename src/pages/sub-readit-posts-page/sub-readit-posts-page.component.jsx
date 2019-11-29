@@ -13,6 +13,7 @@ const SubReaditPostsPage = ({
   selectSubReaditSub,
   onPostsCancelRequest,
   error,
+  selectAuthUserCreds,
   match: { params: { subReadit } }
 }) => {
   console.log(error);
@@ -38,7 +39,7 @@ const SubReaditPostsPage = ({
     <S.Container>
     <SubNavigationContainer />
       <S.Grid>
-        <SubReaditDetailsContainer sub={selectSubReaditSub} loading={loadingSubs} />
+        <SubReaditDetailsContainer user={selectAuthUserCreds} sub={selectSubReaditSub} loading={loadingSubs} />
         <S.Posts>
           <S.H3>Posts</S.H3>
           <PostsContainer posts={selectPostsFilteredPosts} loading={loadingPosts} />

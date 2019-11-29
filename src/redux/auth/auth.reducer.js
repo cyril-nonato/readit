@@ -54,10 +54,12 @@ const authReducer = (state = INITIAL_STATE, action) => {
         failure: action.payload.message,
         popUp: true
       }
-    case actionTypes.AUTH_POP_UP:
+    case actionTypes.AUTH_CLEAR_POP_UP:
       return {
         ...state,
-        popUp: false
+        popUp: false,
+        success: null,
+        failure: null
       }
     case actionTypes.SIGN_OUT_REQUEST:
       return {

@@ -30,6 +30,11 @@ const votesReducer = (state = INITIAL_STATE, action) => {
         failure: action.payload.message,
         loading: false,
       }
+    case actionTypes.VOTES_CHECK_CANCELLED_REQUEST:
+      return {
+        ...state,
+        votesList: null
+      }
     default: return state;
   }
 };

@@ -53,6 +53,26 @@ const postsReducer = (state = INITIAL_STATE, action) => {
         failure: action.payload.message,
         popUp: true,
       }
+    case actionTypes.POSTS_FILTER_BY_USERNAME_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case actionTypes.POSTS_FILTER_BY_USERNAME_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        filteredPosts: action.payload.posts,
+        success: action.payload.message,
+        popUp: true,
+      }
+    case actionTypes.POSTS_FILTER_BY_USERNAME_REQUEST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        failure: action.payload.message,
+        popUp: true,
+      }
     case actionTypes.POSTS_CANCELLED_REQUEST:
       return {
         ...state,

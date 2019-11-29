@@ -6,7 +6,7 @@ const SignOut = ({ selectAuthUserCreds, onSignOutRequest, history }) => {
   useEffect(() => {
     if(selectAuthUserCreds) {
       onSignOutRequest();
-      history.push('/')
+      history.push('/login')
     }
   }, [onSignOutRequest, selectAuthUserCreds, history]);
 

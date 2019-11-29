@@ -29,7 +29,7 @@ const Navigation = ({ selectAuthUserCreds, handleTheme }) => {
           <S.Text>Create</S.Text>
         </S.CreatePostContainer>
         <S.CurrentUserContainer>
-          <S.CurrentUser>
+          <S.CurrentUser to='/your-posts'>
             {selectAuthUserCreds.username.slice(0, 1)}
           </S.CurrentUser>
           <S.Text>{selectAuthUserCreds.username}</S.Text>

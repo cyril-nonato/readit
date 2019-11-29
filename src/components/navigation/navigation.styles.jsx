@@ -199,7 +199,7 @@ export const AllContainer = styled(Link)`
 `;
 
 export const CreatePostIcon = styled.div`
-background-color: ${props => props.theme.quinary};
+  background-color: ${props => props.theme.quinary};
   clip-path: polygon(73% 0, 100% 24%, 25% 100%, 0 100%, 0 73%);
   height: 20px;
   width: 20px;
@@ -219,7 +219,7 @@ export const Sub = styled.div`
 
 `;
 
-export const CurrentUser = styled.span`
+export const CurrentUser = styled(Link)`
   font-size: 2rem;
   font-weight: bold;
   text-transform: capitalize;

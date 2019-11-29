@@ -30,8 +30,9 @@ export const voteDownRequestFailure = (message = 'failure') => ({
   payload: { message }
 });
 
-export const votesCheckRequest = () => ({
-  type: actionTypes.VOTES_CHECK_REQUEST
+export const votesCheckRequest = (userCreds) => ({
+  type: actionTypes.VOTES_CHECK_REQUEST,
+  payload: { userCreds }
 });
 
 export const votesCheckRequestSuccess = (votes, message = 'success') => ({

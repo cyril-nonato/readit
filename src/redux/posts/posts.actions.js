@@ -25,9 +25,24 @@ export const postsFilterBySubReaditRequestSuccess = (posts, message = 'success')
   payload: { posts, message }
 });
 
-export const postsFilterBySubReaditRequestFailure = (posts, message = 'failure') => ({
+export const postsFilterBySubReaditRequestFailure = (message = 'failure') => ({
   type: actionTypes.POSTS_FILTER_BY_SUBREADIT_REQUEST_FAILURE,
+  payload: { message }
+});
+
+export const postsFilterByUsernameRequest = (username) => ({
+  type: actionTypes.POSTS_FILTER_BY_USERNAME_REQUEST,
+  payload: { username }
+})
+
+export const postsFilterByUsernameRequestSuccess = (posts, message = 'success') => ({
+  type: actionTypes.POSTS_FILTER_BY_USERNAME_REQUEST_SUCCESS,
   payload: { posts, message }
+});
+
+export const postsFilterByUsernameRequestFailure = (message = 'failure') => ({
+  type: actionTypes.POSTS_FILTER_BY_USERNAME_REQUEST_FAILURE,
+  payload: { message }
 });
 
 export const postsCancelRequest = () => ({
@@ -41,4 +56,4 @@ export const postsCancelledRequest = (message = 'request cancelled') => ({
 
 export const postsClearPopUp = () => ({
   type: actionTypes.POSTS_CLEAR_POP_UP
-})
+});

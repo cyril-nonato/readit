@@ -1,19 +1,15 @@
 import { call, all, put, takeLeading, takeLatest } from 'redux-saga/effects'
 import rsf, { firebase, firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 import actionTypes from './auth.types'
-import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure, } from './auth.actions';
-import { votesCheckCancelRequest, votesCheckRequest } from '../votes/votes.actions';
+import { signUpRequestSuccess, signInRequestSuccess, signInRequestFailure, signOutRequestSuccess, signOutRequestFailure, signUpRequestFailure, } from './auth.actions';
+import { votesCheckCancelRequest } from '../votes/votes.actions';
 
 // gets user creds from firebase
-function* getUserCreds(user) {
-  const querySnapshot = yield call(rsf.firestore.getDocument, firestore.doc(`users/${user.uid}`))
+function* getUserCreds(user, username) {
+  const querySnapshot = yield call(rsf.firestore.getDocument, firestore.doc(`users/${username}`))
 
   try {
-    const data = yield querySnapshot.data();
-    const userCreds = {
-      ...data,
-      uid: user.uid
-    }
+    const userCreds = yield querySnapshot.data();
     return userCreds
   } catch(error) {
     throw Error ('Error getting user creds')
@@ -27,27 +23,26 @@ function* signUpRequestSagaAsync({ payload: { userCreds: { email, password, conf
     const userCreds = {
       email,
       username,
+      uid: user.uid,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
     }
     
     // Checks for any username matching
-    const querySnapshot = yield call(rsf.firestore.getDocument, firestore.doc(`userslist/${username}`))
+    const querySnapshot = yield call(rsf.firestore.getDocument, firestore.doc(`users/${username}`))
     if(querySnapshot.exists) {
       throw Error('Username already in use');
     }
 
     // Adds user creds to firebase
-    yield call(rsf.firestore.setDocument, `users/${user.uid}`, userCreds);
+    yield call(rsf.firestore.setDocument, `users/${username}`, userCreds);
     yield call(rsf.firestore.setDocument, `votes/${username}`, {uid: user.uid});
     
     // gets user creds from firebase
     const userCredsFromFirebase = yield call(getUserCreds, user, username);
     yield put(signUpRequestSuccess(userCredsFromFirebase));
     
-    // Listens to votes live changes
-    yield put(votesCheckRequest());
   } catch (error) {
-    yield console.log(error.message);
+    yield put(signUpRequestFailure(error.message));
   }
 
 }
@@ -56,17 +51,25 @@ function* signUpRequestSaga() {
   yield takeLeading(actionTypes.SIGN_UP_REQUEST, signUpRequestSagaAsync)
 }
 
+// Gets user Creds
+function* getUserCredsByUid(uid) {
+  const querySnapshot = yield call(rsf.firestore.getCollection, 
+    firestore.collection('users').where('uid', '==', uid));
+
+  const doc = querySnapshot.docs;
+  const userCreds = doc[0].data();
+  return userCreds;
+}
+
 function* signInRequestSagaAsync({ payload: { userCreds: { email, password } } }) {
   try {
     // Authenticate user using email and password
     const { user } = yield call(rsf.auth.signInWithEmailAndPassword, email, password);
-    
-    // Gets user creds from firebase
-    const userCreds = yield call(getUserCreds, user);
+
+    const userCreds = yield call(getUserCredsByUid, user.uid);
+
     yield put(signInRequestSuccess(userCreds));
 
-    // Listens to votes live changes
-    yield put(votesCheckRequest());
   } catch (error) {
     yield put(signInRequestFailure(error.message));
   }

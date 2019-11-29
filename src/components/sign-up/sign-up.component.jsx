@@ -4,9 +4,16 @@ import * as S from '../sign-in-sign-up-styles/styles'
 import FormInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component';
 import { Redirect } from 'react-router-dom'
+import PopUp from '../pop-up/pop-up.component'
 
-
-const SignUp = ({onSignUpRequest, selectAuthUserCreds}) => {
+const SignUp = ({
+  onSignUpRequest, 
+  selectAuthUserCreds,  
+  selectAuthSuccess, 
+  selectAuthFailure, 
+  selectAuthPopUp,
+  onAuthClearPopUp 
+}) => {
 
   const [userCreds, setUserCreds] = useState({
     email: '',
@@ -36,6 +43,7 @@ const SignUp = ({onSignUpRequest, selectAuthUserCreds}) => {
   return ( 
     <S.Container>
       <S.SideImg />
+      <PopUp checkPopUp={selectAuthPopUp} clear={onAuthClearPopUp} success={selectAuthSuccess} failure={selectAuthFailure}  />
       <S.Form onSubmit={handleSubmit}>
         <S.H3>Sign up</S.H3>
         <FormInput value={userCreds.email} onChange={handleChange} name='email' label='email' type='email' />

@@ -30,7 +30,7 @@ const PostCard = ({ post, isLink, type }) => {
           }
         </S.ContentContainerLink>
         <S.VotesContainer>
-          <VotesContainer id={id} value={votes} />
+          <VotesContainer created_by={created_by} id={id} value={votes} />
         </S.VotesContainer>
         <S.CommentsContainerLink to={`/r/${subReadit}/${id}`}>
           <S.CommentsHover>
@@ -60,7 +60,7 @@ const PostCard = ({ post, isLink, type }) => {
         }
       </S.ContentContainer>
       <S.VotesContainer>
-        <VotesContainer id={id} value={votes} />
+        <VotesContainer created_by={created_by} id={id} value={votes} />
       </S.VotesContainer>
       <S.CommentsContainer>
         <S.CommentsHover>
