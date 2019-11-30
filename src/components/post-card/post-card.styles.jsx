@@ -168,7 +168,7 @@ export const CommentsContainer = styled.div`
 `;
 
 export const BackgroundImage = styled.img`
-  width: 100%;
+  width: 90%;
   height: auto;
   display: block;
 `;
