@@ -14,9 +14,11 @@ const SubReaditPostsPage = ({
   onPostsCancelRequest,
   error,
   selectAuthUserCreds,
+  selectSubReaditLists,
+  onSubReaditListsRequest,
   match: { params: { subReadit } }
 }) => {
-  console.log(error);
+
   //Filter posts by subReadit
   useEffect(() => {
     onPostsFilterBySubReaditRequest(subReadit);
@@ -33,7 +35,14 @@ const SubReaditPostsPage = ({
     return () => {
       onPostsCancelRequest();
     }
-  }, [onPostsCancelRequest])
+  }, [onPostsCancelRequest]);
+
+  useEffect(() => {
+    if (!selectSubReaditLists) {
+      onSubReaditListsRequest()
+    }
+
+  }, [onSubReaditListsRequest, selectSubReaditLists]);
 
   return (
     <S.Container>

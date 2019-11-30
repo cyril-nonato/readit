@@ -35,7 +35,7 @@ function App() {
   }, [dispatch, userCreds]);
 
   const handleTheme = (type) => {
-    if (!type) {
+    if (type === false) {
       // Light
       dispatch(changeCurrentTheme(theme1))
     } else {

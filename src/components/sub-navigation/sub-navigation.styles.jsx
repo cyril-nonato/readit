@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
   background-color: ${props => props.theme.primary};
   padding: 1rem;
   margin-top: 51px;
+  display: flex;
 `;
 
 export const ViewContainer = styled.div`
@@ -81,19 +83,19 @@ const activeStyle = css`
 `;
 
 const activeCard = props => {
-  if(props.type === 'card') {
+  if (props.type === 'card') {
     return activeStyle;
   }
 }
 
 const activeClassic = props => {
-  if(props.type === 'classic') {
+  if (props.type === 'classic') {
     return activeStyle;
   }
 }
 
 const activeCompact = props => {
-  if(props.type === 'compact') {
+  if (props.type === 'compact') {
     return activeStyle;
   }
 }
@@ -118,3 +120,96 @@ export const Compact = styled.div`
 
   ${activeCompact};
 `;
+
+export const SubReaditContainer = styled.div`
+  margin-left: 2rem;
+  position: relative;
+`;
+
+export const SelectSubReadit = styled.div`
+  padding: .5rem;
+  border: 1px solid ${props => props.theme.quarternary};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const SelectSubReaditText = styled.span`
+  font-size: 1rem;
+  margin-right: 1rem;
+  color: ${props => props.theme.tertiary};
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    font-size: 1.4rem;
+  }
+`;
+
+export const SelectSubReaditTriangle = styled.div`
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  width: 20px;
+  height: 10px;
+  background-color: ${props => props.theme.quarternary};
+`;
+
+export const SubReaditList = styled.ul`
+  list-style: none;
+  position: absolute;
+  left: 0;
+  top: 3rem;
+  z-index: 20;
+  background-color: ${props => props.theme.primary};
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow: hidden;
+`;
+
+
+export const SubReaditLink = styled(Link)`
+  color: ${props => props.theme.tertiary};
+`;
+
+export const SubReaditItem = styled.li`
+  display: flex;
+  padding: .5rem;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    font-size: 1.4rem;
+  }
+
+  &:hover {
+    background-color: ${props => props.theme.secondary};
+  }
+
+  &:hover ${SubReaditLink} {
+    color: ${props => props.theme.primary};
+  }
+`;
+
+export const SubReaditIcon = styled.img`
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    height: 20px;
+    width: 20px;
+  }
+
+`
