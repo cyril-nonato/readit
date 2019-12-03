@@ -10,14 +10,9 @@ export const Posts = styled.div`
 `;
 
 export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "bg bg"
-    "posts posts"
-  ;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    display: grid;
     grid-column-gap: 2rem;
     grid-template-columns: 7fr 3fr;
     grid-template-areas:
@@ -37,6 +32,5 @@ export const H3 = styled.h3`
 
 
 export const Container = styled.div`
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 `;

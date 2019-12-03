@@ -49,19 +49,19 @@ export const ContentContainer = styled.div`
   position: relative;
   margin-top: 5rem;
   margin-right: 5rem;
-`
-
-export const Content = styled.div`
-  background-color: ${props => props.theme.primary};
-  border-radius: 5px;
   display: none;
-  color: ${props => props.theme.text};
-  position: absolute;
-  padding-bottom: 2rem;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     display: block;
   }
+`;
+
+export const Content = styled.div`
+  background-color: ${props => props.theme.primary};
+  border-radius: 5px;
+  color: ${props => props.theme.text};
+  position: absolute;
+  padding-bottom: 2rem;
 `;
 
 export const Button = styled.div`

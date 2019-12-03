@@ -178,12 +178,11 @@ export const SubReaditLink = styled(Link)`
 `;
 
 export const SubReaditItem = styled.li`
-  display: flex;
   padding: .5rem;
   font-size: 1rem;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  display: grid;
+  grid-template-columns: .75fr 3fr;
+
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
     font-size: 1.3rem;
