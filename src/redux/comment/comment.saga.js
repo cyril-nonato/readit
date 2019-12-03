@@ -19,12 +19,12 @@ function* addCommentRequestSagaAsync({ payload: { comment } }) {
   const updatedComments = updateComment(comments, commentToAdd);
   // Convert Array to Object
   const newObjComment = arrayToObj(updatedComments);
-  
+  console.log(newObjComment);
   try {
     yield call(rsf.firestore.updateDocument, `posts/${id}`, 'comments', newObjComment);
     yield put(addCommentRequestSuccess());
   } catch (error) {
-    yield put(addCommentRequestFailure());
+    yield put(addCommentRequestFailure(error.message));
   }
 }
 

@@ -9,6 +9,9 @@ const Navigation = ({ selectAuthUserCreds, handleTheme }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   const handleClick = e => {
+    if(e.target.tagName === 'A') {
+      setToggleDropdown(!toggleDropdown);
+    }
     setToggleDropdown(!toggleDropdown);
   };
 

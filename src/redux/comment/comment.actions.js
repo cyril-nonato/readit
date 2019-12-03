@@ -11,6 +11,6 @@ export const addCommentRequestSuccess = (message = 'success') => ({
 });
 
 export const addCommentRequestFailure = (message = 'failure') => ({
-  type: actionTypes.ADD_COMMENT_REQUEST_SUCCESS,
+  type: actionTypes.ADD_COMMENT_REQUEST_FAILURE,
   payload: { message }
 });
