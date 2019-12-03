@@ -5,6 +5,10 @@ export const Container = styled.li`
   flex-direction: column;
   margin-bottom: 1rem;
   background-color: ${props => props.theme.primary};
+
+  &:not(:last-child) {
+    border-bottom: 1px solid ${props => props.theme.quarternary};
+  }
 `;
 
 export const NameAndTime = styled.div`

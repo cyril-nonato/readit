@@ -76,4 +76,5 @@ export const Anchor = styled(Link)`
   text-transform: uppercase;
   margin-left: .5rem;
   color: ${props => props.theme.secondary};
+  margin-bottom: 1rem;
 `;

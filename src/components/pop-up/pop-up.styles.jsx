@@ -91,5 +91,5 @@ export const Span = styled.span`
   font-size: 1.4rem;
   justify-self: left;
   align-self: center;
-  
+  color: ${props => props.theme.tertiary};
 `

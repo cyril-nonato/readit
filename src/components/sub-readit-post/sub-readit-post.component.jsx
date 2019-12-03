@@ -40,7 +40,8 @@ const SubReaditPost = ({
   };
 
   const handleDelete = () => {
-    onDeletePostRequest(selectCrudPostPost.id)
+    onDeletePostRequest(selectCrudPostPost.id);
+    history.push('/');
   };
 
   const handlePopUpClear = () => {

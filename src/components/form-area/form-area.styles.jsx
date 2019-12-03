@@ -63,6 +63,7 @@ export const Input = styled.textarea`
   padding: 1.5rem 1rem .75rem 1rem;
   display: inline-block;
   width: inherit;
+  font-size: 1.4rem;
   font-family: inherit;
   border-radius: 5px;
   width: 100%;
