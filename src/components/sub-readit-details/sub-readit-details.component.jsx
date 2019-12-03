@@ -13,6 +13,7 @@ const SubReaditDetails = ({ user, sub: { background, icon, id, text } }) => {
           <S.Name>r/{id}</S.Name>
         </S.BgDetails>
       </S.Background>
+      <S.ContentContainer>
       <S.Content>
         <S.Community>Community Details</S.Community>
         <S.Title>
@@ -31,6 +32,7 @@ const SubReaditDetails = ({ user, sub: { background, icon, id, text } }) => {
           }
         </S.Button>
       </S.Content>
+      </S.ContentContainer>
     </React.Fragment>
   );
 }

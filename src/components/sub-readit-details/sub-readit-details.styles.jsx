@@ -44,15 +44,20 @@ export const BgDetails = styled.div`
   }
 `;
 
-export const Content = styled.div`
-  background-color: ${props => props.theme.primary};
-  height: 320px;
+export const ContentContainer = styled.div`
+  grid-area: subReaditContent;
+  position: relative;
   margin-top: 5rem;
   margin-right: 5rem;
+`
+
+export const Content = styled.div`
+  background-color: ${props => props.theme.primary};
   border-radius: 5px;
   display: none;
-  grid-area: subReaditContent;
   color: ${props => props.theme.text};
+  position: absolute;
+  padding-bottom: 2rem;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     display: block;
@@ -62,6 +67,7 @@ export const Content = styled.div`
 export const Button = styled.div`
   display: flex;
   justify-content: center;
+  align-items: flex-end;
 `;
 
 export const Community = styled.div`

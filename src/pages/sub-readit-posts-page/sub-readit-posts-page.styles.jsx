@@ -19,7 +19,7 @@ export const Grid = styled.div`
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     grid-column-gap: 2rem;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 7fr 3fr;
     grid-template-areas:
       "bg bg"
       "posts subReaditContent"
