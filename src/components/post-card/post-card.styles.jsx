@@ -148,8 +148,6 @@ const CommentsContainerStyles = css`
     width: 130px;
   };
 
-
-
   &:hover {
     cursor: pointer;
   }
@@ -168,10 +166,14 @@ export const CommentsContainer = styled.div`
 `;
 
 export const BackgroundImage = styled.img`
-  width: auto;
-  height: 50rem;
+  max-width: 100%;
+  height: 80vh;
   display: block;
   margin: 0 auto;
+
+  @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
+    height: 90vh;
+  }
 `;
 
 export const VotesContainer = styled.div`

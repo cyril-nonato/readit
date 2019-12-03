@@ -18,10 +18,10 @@ export const checkIfLinkOrPost = post => {
     }
   }
 
-  const pattern = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg)/g);
+  const pattern = new RegExp(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g);
   const imageLink = post.image;
   if (!pattern.test(imageLink)) {
-    throw Error('Please start with http and end with the file type')
+    throw Error('Please start with http and end with the necessary file type (jpg/png/jpeg/gif)')
   }
 
   return {
