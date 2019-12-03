@@ -39,7 +39,7 @@ const Navigation = ({ selectAuthUserCreds, handleTheme }) => {
 
   return (
     <S.Navigation selectAuthUserCreds={selectAuthUserCreds}>
-      <S.BrandContainer>
+      <S.BrandContainer to='/'>
         <S.BrandLogo src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Reddit_logo_orange.svg/240px-Reddit_logo_orange.svg.png' />
         <S.BrandText>Readit</S.BrandText>
       </S.BrandContainer>

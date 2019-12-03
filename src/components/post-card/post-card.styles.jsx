@@ -168,9 +168,10 @@ export const CommentsContainer = styled.div`
 `;
 
 export const BackgroundImage = styled.img`
-  width: 90%;
-  height: auto;
+  width: auto;
+  height: 50rem;
   display: block;
+  margin: 0 auto;
 `;
 
 export const VotesContainer = styled.div`

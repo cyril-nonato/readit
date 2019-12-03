@@ -79,18 +79,19 @@ export const BrandLogo = styled.img`
   height: 30px;
 `;
 
-export const BrandText = styled.h2`
+export const BrandText = styled.span`
   font-size: 1.6rem;
   letter-spacing: 1px;
   display: none;
   color: ${props => props.theme.text};
+  font-weight: bold;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     display: block;
   }
 `
 
-export const BrandContainer = styled.div`
+export const BrandContainer = styled(Link)`
   padding-left: 1rem;
 
   display: flex;
