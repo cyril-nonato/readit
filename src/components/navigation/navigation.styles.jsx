@@ -33,7 +33,7 @@ export const Navigation = styled.div`
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
     padding: 0 5rem;
-    grid-template-columns: 1.15fr 5fr .25fr 1fr 1fr .5fr;
+    grid-template-columns: 1.25fr 5fr .25fr 1fr 1fr .5fr;
 
   }
 
