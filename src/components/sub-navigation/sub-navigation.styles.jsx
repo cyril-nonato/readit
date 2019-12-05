@@ -9,12 +9,12 @@ export const Container = styled.div`
 `;
 
 export const ViewContainer = styled.div`
-  margin-left: 1rem;
-  display: flex;
-  align-items: center;
+  display: none;
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.tablet}) {
     margin-left: 3rem;
+    display: flex;
+    align-items: center;
   }
 
   @media only screen and (min-width: ${props => props.theme.mediaQueries.windows}) {
