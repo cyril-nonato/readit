@@ -1,5 +1,3 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 # Readit
 A reddit clone app
 
@@ -11,3 +9,10 @@ Redux-saga-firebase
 React-router-dom
 Firebase
 Styled-components
+
+## How to use
+Npm install
+Npm start
+
+## Live Demo of the App
+https://redditzilla-8f620.web.app/
