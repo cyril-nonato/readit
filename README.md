@@ -2,13 +2,13 @@
 A reddit clone app
 
 ## Stack that I use
-React
-Redux
-Redux-saga
-Redux-saga-firebase
-React-router-dom
-Firebase
-Styled-components
+React  
+Redux  
+Redux-saga  
+Redux-saga-firebase  
+React-router-dom  
+Firebase  
+Styled-components  
 
 ## How to use
 Npm install  
