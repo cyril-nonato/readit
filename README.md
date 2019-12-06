@@ -11,7 +11,7 @@ Firebase
 Styled-components
 
 ## How to use
-Npm install
+Npm install  
 Npm start
 
 ## Live Demo of the App
