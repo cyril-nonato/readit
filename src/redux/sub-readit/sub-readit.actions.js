@@ -38,3 +38,17 @@ export const subReaditCancelledRequest = (message = 'request cancelled') => ({
   payload: { message }
 });
 
+export const subReaditCreateRequest = (details) => ({
+  type: actionTypes.SUB_READIT_CREATE_REQUEST,
+  payload: { details }
+});
+
+export const subReaditCreateRequestSuccess = (message = 'success') => ({
+  type: actionTypes.SUB_READIT_CREATE_REQUEST_SUCCESS,
+  payload: { message }
+});
+
+export const subReaditCreateRequestFailure = (message = 'failure') => ({
+  type: actionTypes.SUB_READIT_CREATE_REQUEST_FAILURE,
+  payload: { message }
+});

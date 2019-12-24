@@ -3,10 +3,10 @@ import rsf, { firestore } from '../../firebase-redux-saga/firebase-redux-saga'
 
 import { docsToMap } from '../utils';
 import actionTypes from './sub-readit.types';
-import { subReaditListsRequestSuccess, subReaditListsRequestFailure, subReaditRequestSuccess, subReaditRequestFailure, subReaditCancelledRequest } from './sub-readit.actions';
+import { subReaditListsRequestSuccess, subReaditListsRequestFailure, subReaditRequestSuccess, subReaditRequestFailure, subReaditCancelledRequest, subReaditCreateRequestSuccess, subReaditCreateRequestFailure } from './sub-readit.actions';
 
 function* subReaditListsRequestSagaAsync() {
-  const channel = yield call(rsf.firestore.channel, 
+  const channel = yield call(rsf.firestore.channel,
     firestore.collection('subReadit'));
 
   try {
@@ -19,7 +19,7 @@ function* subReaditListsRequestSagaAsync() {
   } catch (error) {
     yield put(subReaditListsRequestFailure(error.message));
   } finally {
-    if(yield cancelled()) {
+    if (yield cancelled()) {
       yield put(subReaditCancelledRequest())
     }
   }
@@ -32,10 +32,10 @@ function* subReaditListsRequestSaga() {
   yield cancel(sync);
 }
 
-function* subReaditRequestSagaAsync({payload: {name}}) {
+function* subReaditRequestSagaAsync({ payload: { name } }) {
   try {
     const querySnapshot = yield call(rsf.firestore.getDocument, `subReadit/${name}`);
-    if(!querySnapshot.exists) {
+    if (!querySnapshot.exists) {
       throw Error('Not found');
     }
     const data = querySnapshot.data();
@@ -53,9 +53,24 @@ function* subReaditRequestSaga() {
   yield takeLeading(actionTypes.SUB_READIT_REQUEST, subReaditRequestSagaAsync);
 }
 
+function* subReaditCreateRequestSagaAsync({ payload: { details } }) {
+  const {name, icon, background, text} = details;
+  try {
+    yield call(rsf.firestore.setDocument, `subReadit/${name}`, {icon, background ,text});
+    yield put(subReaditCreateRequestSuccess())
+  } catch (error) {
+    yield put(subReaditCreateRequestFailure(error.message))
+  }
+}
+
+function* subReaditCreateRequestSaga() {
+  yield takeLeading(actionTypes.SUB_READIT_CREATE_REQUEST, subReaditCreateRequestSagaAsync)
+}
+
 export function* subReaditSaga() {
   yield all([
     call(subReaditListsRequestSaga),
-    call(subReaditRequestSaga)
+    call(subReaditRequestSaga),
+    call(subReaditCreateRequestSaga)
   ])
 }

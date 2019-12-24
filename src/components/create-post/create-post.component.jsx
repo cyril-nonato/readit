@@ -9,17 +9,13 @@ import SelectSubreadit from '../select-sub-readit/select-sub-readit.component';
 import PopUp from '../pop-up/pop-up.component'
 
 const CreatePost = ({ 
-  onSignInRequest, 
   selectSubReaditLists, 
-  selectSubReaditSub,
   selectCrudPostSuccess,
   selectCrudPostFailure,
   selectCrudPostPopUp,
   onCrudPostClearPopUp,
   onCreatePostRequest 
 }) => {
-
-
 
   const startingData = {
     title: '',
@@ -28,6 +24,7 @@ const CreatePost = ({
     icon: '',
     subReadit: '',
   }
+  
   const [postData, setPostData] = useState(startingData);
 
   useEffect(() => {

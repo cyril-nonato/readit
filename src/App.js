@@ -20,6 +20,7 @@ const SubReaditPage = lazy(() => import('./pages/sub-readit-page/sub-readit-page
 const UpdatePostPageContainer = lazy(() => import('./pages/update-post-page/update-post-page.container'))
 const UserPostsPageContainer = lazy(() => import('./pages/user-posts-page/user-posts-page.container'))
 const SignOutContainer = lazy(() => import('./components/sign-out/sign-out.container'))
+const CreateSubReaditPageContainer = lazy(() => import('./pages/create-sub-readit-page/create-sub-readit-page.container'))
 
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
               <Route path='/register' component={SignUpPage} />
               <Route path='/logout' component={SignOutContainer} />
               <Route path='/r' component={SubReaditPage} />
+              <Route path='/create-subReadit' component={CreateSubReaditPageContainer} />
               <Route exact path='/create-post' component={CreatePostPageContainer} />
               <Route exact path='/update-post/:subReadit/:id' component={UpdatePostPageContainer} />
               <Route exact path='/your-posts' component={UserPostsPageContainer} />
